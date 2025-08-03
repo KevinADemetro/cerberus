@@ -10,6 +10,7 @@ import {
   Dispatch,
   SetStateAction,
 } from "react";
+import { useOutsideClick } from "../_hooks/useOutsideClick";
 
 interface SideDrawerContextType {
   openName: string;
@@ -17,9 +18,7 @@ interface SideDrawerContextType {
   open: Dispatch<SetStateAction<string>>;
 }
 
-const SideDrawerContext = createContext<SideDrawerContextType | undefined>(
-  undefined
-);
+const SideDrawerContext = createContext<SideDrawerContextType | undefined>(undefined);
 
 interface SideDrawerProps {
   children: ReactNode;
@@ -59,34 +58,21 @@ const Open: FC<OpenProps> = ({ children, name }) => {
 
 const Window: FC<WindowProps> = ({ children, name, openPosition = "left" }) => {
   const context = useContext(SideDrawerContext);
+  const ref = useOutsideClick(context?.close);
+
   if (name !== context?.openName) return null;
   return (
-    <div className="fixed top-0 left-0 w-[100%] h-full bg-backdrop backdrop-blur-[4px] z-[1000]">
+    <div className="fixed top-0 left-0 w-[100%] h-full bg-backdrop z-[1000]">
       <div
+        ref={ref}
         className={`
-        ${
-          openPosition === "left"
-            ? "bg-amber-400 w-[70%] h-full fixed left-0 top-0"
-            : ""
-        }
-        ${
-          openPosition === "right"
-            ? "bg-amber-400 w-[70%] h-full fixed right-0 top-0"
-            : ""
-        }
-        ${
-          openPosition === "top"
-            ? "bg-amber-400 h-[50%] w-full fixed top-0 left-0"
-            : ""
-        }
-        ${
-          openPosition === "bottom"
-            ? "bg-amber-400 h-[50%] w-full fixed bottom-0 left-0"
-            : ""
-        }
+        bg-white
+        ${openPosition === "left" ? "w-[80%] h-full fixed left-0 top-0" : ""}
+        ${openPosition === "right" ? "w-[80%] h-full fixed right-0 top-0" : ""}
+        ${openPosition === "top" ? "h-[50%] w-full fixed top-0 left-0" : ""}
+        ${openPosition === "bottom" ? "h-[50%] w-full fixed bottom-0 left-0" : ""}
       `}
       >
-        <button onClick={context?.close}>fechar</button>
         {children}
       </div>
     </div>
