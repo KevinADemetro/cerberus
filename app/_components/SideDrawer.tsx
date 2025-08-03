@@ -7,12 +7,14 @@ import {
   useState,
   FC,
   ReactNode,
+  Dispatch,
+  SetStateAction,
 } from "react";
 
 interface SideDrawerContextType {
   openName: string;
   close: () => void;
-  open: (name: string) => void;
+  open: Dispatch<SetStateAction<string>>;
 }
 
 const SideDrawerContext = createContext<SideDrawerContextType | undefined>(
@@ -57,7 +59,12 @@ const Open: FC<OpenProps> = ({ children, name }) => {
 const Window: FC<WindowProps> = ({ children, name }) => {
   const context = useContext(SideDrawerContext);
   if (name !== context?.openName) return null;
-  return <div>{children}</div>;
+  return (
+    <div>
+      <button onClick={context?.close}>fechar</button>
+      {children}
+    </div>
+  );
 };
 
 SideDrawer.Open = Open;
