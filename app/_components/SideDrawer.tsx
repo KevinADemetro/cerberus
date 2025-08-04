@@ -11,6 +11,8 @@ import {
   SetStateAction,
 } from "react";
 import { useOutsideClick } from "../_hooks/useOutsideClick";
+import IconButton from "./IconButton";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 
 interface SideDrawerContextType {
   openName: string;
@@ -38,6 +40,7 @@ interface WindowProps {
 interface SideDrawerComponent extends FC<SideDrawerProps> {
   Open: FC<OpenProps>;
   Window: FC<WindowProps>;
+  Close: FC;
 }
 
 const SideDrawer: SideDrawerComponent = ({ children }: SideDrawerProps) => {
@@ -66,7 +69,7 @@ const Window: FC<WindowProps> = ({ children, name, openPosition = "left" }) => {
       <div
         ref={ref}
         className={`
-        bg-white
+        bg-white px-5 py-2
         ${openPosition === "left" ? "w-[80%] h-full fixed left-0 top-0" : ""}
         ${openPosition === "right" ? "w-[80%] h-full fixed right-0 top-0" : ""}
         ${openPosition === "top" ? "h-[50%] w-full fixed top-0 left-0" : ""}
@@ -79,7 +82,18 @@ const Window: FC<WindowProps> = ({ children, name, openPosition = "left" }) => {
   );
 };
 
+const Close: FC = () => {
+  const context = useContext(SideDrawerContext);
+
+  return (
+    <IconButton onClick={() => context?.close()}>
+      <XMarkIcon className="size-4" />
+    </IconButton>
+  );
+};
+
 SideDrawer.Open = Open;
 SideDrawer.Window = Window;
+SideDrawer.Close = Close;
 
 export default SideDrawer;

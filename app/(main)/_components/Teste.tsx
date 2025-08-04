@@ -8,7 +8,13 @@ function Teste() {
         <button>teste</button>
       </SideDrawer.Open>
       <SideDrawer.Window name="teste" openPosition="right">
-        <div>aaaaaaaaaaa</div>
+        <div>
+          <div className="flex justify-between">
+            <h2>Filtros</h2>
+            <SideDrawer.Close />
+          </div>
+          <div>aaaaaaaaaaa</div>
+        </div>
       </SideDrawer.Window>
     </SideDrawer>
   );

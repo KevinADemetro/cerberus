@@ -1,9 +1,11 @@
 function IconButton({
   children,
+  onClick,
 }: Readonly<{
   children: React.ReactNode;
+  onClick: () => void;
 }>) {
-  return <button>{children}</button>;
+  return <button onClick={onClick}>{children}</button>;
 }
 
 export default IconButton;
