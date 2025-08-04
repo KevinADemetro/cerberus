@@ -1,7 +1,6 @@
 import { ShoppingBagIcon, Bars3Icon } from "@heroicons/react/24/outline";
-import SearchBar from "./SearchBar";
-import IconButton from "../../_components/IconButton";
 import Link from "next/link";
+import SearchWithFilters from "./SearchWithFilters";
 function Header() {
   return (
     <header className="bg-white flex flex-col p-3 gap-2">
@@ -11,14 +10,10 @@ function Header() {
           <Link href="/carrinho">
             <ShoppingBagIcon className="size-6" />
           </Link>
-          <IconButton>
-            <Bars3Icon className="size-6" />
-          </IconButton>
+          <Bars3Icon className="size-6" />
         </div>
       </div>
-      <div>
-        <SearchBar />
-      </div>
+      <SearchWithFilters />
     </header>
   );
 }

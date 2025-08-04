@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import Teste from "../../_components/Teste";
 
 async function Page({ params }: { params: Promise<{ filtros: string[] }> }) {
   const { filtros: filtrosParam } = await params;
@@ -15,11 +14,7 @@ async function Page({ params }: { params: Promise<{ filtros: string[] }> }) {
     filtros[chave] = valor;
   }
 
-  return (
-    <div>
-      <Teste />
-    </div>
-  );
+  return <div></div>;
 }
 
 export default Page;

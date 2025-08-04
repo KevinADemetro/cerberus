@@ -1,23 +1,24 @@
 "use client";
 import SideDrawer from "@/app/_components/SideDrawer";
+import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/outline";
 
-function Teste() {
+function Filters() {
   return (
     <SideDrawer>
-      <SideDrawer.Open name="teste">
-        <button>teste</button>
+      <SideDrawer.Open name="filtros">
+        <AdjustmentsHorizontalIcon className="size-6" />
       </SideDrawer.Open>
-      <SideDrawer.Window name="teste" openPosition="right">
+      <SideDrawer.Window name="filtros" openPosition="left">
         <div>
           <div className="flex justify-between">
             <h2>Filtros</h2>
             <SideDrawer.Close />
           </div>
-          <div>aaaaaaaaaaa</div>
+          <div>Lista de filtros</div>
         </div>
       </SideDrawer.Window>
     </SideDrawer>
   );
 }
 
-export default Teste;
+export default Filters;
