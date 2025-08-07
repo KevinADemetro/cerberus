@@ -1,4 +1,4 @@
-import "./globals.css";
+import "../styles/globals.css";
 
 function RootLayout({
   children,
@@ -7,7 +7,7 @@ function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="text-text">{children}</body>
     </html>
   );
 }

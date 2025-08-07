@@ -3,7 +3,7 @@ import Link from "next/link";
 import SearchWithFilters from "./SearchWithFilters";
 function Header() {
   return (
-    <header className="bg-white flex flex-col p-3 gap-2">
+    <header className="bg-background flex flex-col p-3 gap-2">
       <div className="flex justify-between">
         <div>logo</div>
         <div className="flex gap-3">

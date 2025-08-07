@@ -1,7 +1,7 @@
 "use client";
 import { usePathname } from "next/navigation";
 import Filters from "./Filters";
-import SearchBar from "./SearchBar";
+import SearchBar from "../components/SearchBar";
 
 function SearchWithFilters() {
   const pathname = usePathname();

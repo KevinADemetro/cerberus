@@ -2,4 +2,6 @@
 
 @theme {
   --color-backdrop: rgba(0, 0, 0, 0.7);
+  --color-background: white;
+  --color-text: #11111;
 }
