@@ -1,21 +1,26 @@
-import { PrismaClient, Prisma } from "../app/generated/prisma";
+import { PrismaClient, Prisma } from "../generated/prisma";
 
 const prisma = new PrismaClient();
 
-const userData: Prisma.UserCreateInput[] = [
+const categoriesData: Prisma.CategoryCreateInput[] = [
   {
-    name: "Alice",
-    email: "alice@prisma.io",
-  },
-  {
-    name: "Bob",
-    email: "bob@prisma.io",
+    title: "Casual",
+    products: {
+      create: [
+        {
+          name: "Tenis dahora",
+          price: 100,
+          starRating: 5,
+          discountRate: 60,
+        },
+      ],
+    },
   },
 ];
 
 export async function main() {
-  for (const u of userData) {
-    await prisma.user.create({ data: u });
+  for (const c of categoriesData) {
+    await prisma.category.create({ data: c });
   }
 }
 
