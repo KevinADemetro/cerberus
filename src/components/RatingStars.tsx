@@ -2,6 +2,7 @@ import StarEmpty from "@/src/icons/star-empty.svg";
 import StarFull from "@/src/icons/star-full.svg";
 import StarHalf from "@/src/icons/star-half.svg";
 import Image from "next/image";
+import { formatOneDecimal } from "../utils/formatter";
 
 function RatingStars({ rating }: { rating: number }) {
   const stars = [];
@@ -19,9 +20,11 @@ function RatingStars({ rating }: { rating: number }) {
   }
 
   return (
-    <div className="flex items-center gap-1">
-      <div className="flex">{stars}</div>
-      <span className="border border-gray-400 px-1 text-sm text-gray-600">{rating}</span>
+    <div className="flex items-center justify-between">
+      <div className="flex gap-1">{stars}</div>
+      <span className="border border-gray-400 px-1 text-sm text-gray-600">
+        {formatOneDecimal(rating)}
+      </span>
     </div>
   );
 }
