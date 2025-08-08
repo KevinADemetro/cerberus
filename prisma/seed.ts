@@ -7,12 +7,49 @@ const categoriesData: Prisma.CategoryCreateInput[] = [
     title: "Casual",
     products: {
       create: [
-        {
-          name: "Tenis dahora",
-          price: 100,
-          starRating: 5,
-          discountRate: 60,
-        },
+        { name: "Tênis Conforto", price: 120, starRating: 4.5, discountRate: 50 },
+        { name: "Camisa Polo", price: 80, starRating: 4.2, discountRate: 40 },
+        { name: "Calça Jeans Slim", price: 150, starRating: 4.8, discountRate: 30 },
+      ],
+    },
+  },
+  {
+    title: "Esportivo",
+    products: {
+      create: [
+        { name: "Tênis de Corrida", price: 250, starRating: 4.9, discountRate: 35 },
+        { name: "Camiseta Dry Fit", price: 60, starRating: 4.7, discountRate: 55 },
+        { name: "Shorts de Treino", price: 70, starRating: 4.5, discountRate: 45 },
+      ],
+    },
+  },
+  {
+    title: "Formal",
+    products: {
+      create: [
+        { name: "Sapato Social Couro", price: 300, starRating: 4.6, discountRate: 25 },
+        { name: "Camisa Social Slim", price: 150, starRating: 4.4, discountRate: 40 },
+        { name: "Gravata Seda", price: 90, starRating: 4.3, discountRate: 30 },
+      ],
+    },
+  },
+  {
+    title: "Acessórios",
+    products: {
+      create: [
+        { name: "Relógio Esportivo", price: 200, starRating: 4.8, discountRate: 50 },
+        { name: "Boné Trucker", price: 45, starRating: 4.5, discountRate: 60 },
+        { name: "Cinto de Couro", price: 75, starRating: 4.4, discountRate: 35 },
+      ],
+    },
+  },
+  {
+    title: "Inverno",
+    products: {
+      create: [
+        { name: "Jaqueta de Couro", price: 400, starRating: 4.9, discountRate: 20 },
+        { name: "Moletom Canguru", price: 180, starRating: 4.7, discountRate: 50 },
+        { name: "Cachecol de Lã", price: 60, starRating: 4.6, discountRate: 40 },
       ],
     },
   },

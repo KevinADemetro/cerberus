@@ -1,10 +1,11 @@
+import { Product } from "@/generated/prisma";
 import RatingStars from "../components/RatingStars";
 
-function ProductCard() {
+function ProductCard({ product }: { product: Product }) {
   return (
-    <div>
+    <div className="border border-red-500">
       card
-      <RatingStars />
+      <RatingStars rating={product.starRating} />
     </div>
   );
 }
