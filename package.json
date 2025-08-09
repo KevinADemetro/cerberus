@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "migrate": "npx prisma migrate dev --name init",
+    "generate": "npx prisma generate",
     "seed": "npx prisma db seed",
     "dbeaver": "npx prisma studio"
   },

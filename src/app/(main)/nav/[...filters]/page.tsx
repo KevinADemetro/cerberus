@@ -2,22 +2,22 @@ import { notFound } from "next/navigation";
 import ProductsList from "../../../../components/ProductsList";
 import prisma from "@/src/lib/prisma";
 
-async function Page({ params }: { params: Promise<{ filtros: string[] }> }) {
+async function Page({ params }: { params: Promise<{ filters: string[] }> }) {
   const products = await prisma.product.findMany({
     include: {
       category: true,
     },
   });
-  const { filtros: filtrosParam } = await params;
+  const { filters: filtersParam } = await params;
 
-  if (filtrosParam.length % 2 !== 0) {
+  if (filtersParam.length % 2 !== 0) {
     notFound();
   }
   const filtros: Record<string, string> = {};
 
-  for (let i = 0; i < filtrosParam.length; i += 2) {
-    const chave = filtrosParam[i];
-    const valor = filtrosParam[i + 1];
+  for (let i = 0; i < filtersParam.length; i += 2) {
+    const chave = filtersParam[i];
+    const valor = filtersParam[i + 1];
     filtros[chave] = valor;
   }
 
