@@ -5,7 +5,7 @@ function Header() {
   return (
     <header className="bg-background flex flex-col p-3 gap-2">
       <div className="flex justify-between">
-        <div>logo</div>
+        <Link href="/">logo</Link>
         <div className="flex gap-3">
           <Link href="/carrinho">
             <ShoppingBagIcon className="size-6" />
