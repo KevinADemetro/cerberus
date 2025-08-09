@@ -3,8 +3,11 @@ import ProductsList from "../../../../components/ProductsList";
 import prisma from "@/src/lib/prisma";
 
 async function Page({ params }: { params: Promise<{ filtros: string[] }> }) {
-  const products = await prisma.product.findMany();
-  console.log(products);
+  const products = await prisma.product.findMany({
+    include: {
+      category: true,
+    },
+  });
   const { filtros: filtrosParam } = await params;
 
   if (filtrosParam.length % 2 !== 0) {
