@@ -1,5 +1,3 @@
 "use server";
 
-export async function handleAction(e: FormData) {
-  console.log(e.get("size"));
-}
+export async function handleAddToCart(variant) {}

@@ -4,8 +4,6 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import productPlaceholder from "@/public/productPlaceholder.jpg";
 import ProductColors from "@/src/components/ProductColors";
-import ProductSizes from "@/src/components/ProductSizes";
-import { StickyBottom } from "@/src/components/StickyBottom";
 import ProductDescription from "@/src/components/ProductDescription";
 import AddToCartForm from "@/src/components/AddToCartForm";
 

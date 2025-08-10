@@ -1,12 +1,20 @@
 "use client";
 import { ProductVariant } from "@/generated/prisma";
-import { ChangeEvent, useState } from "react";
 
-function ProductSizes({ sizes }: { sizes: ProductVariant[] }) {
-  const [selected, setSelected] = useState("option1");
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSelected(e.target.value);
+function ProductSizes({
+  sizes,
+  setShowSizeError,
+  setSelected,
+  selected,
+}: {
+  sizes: ProductVariant[];
+  setShowSizeError: (value: boolean) => void;
+  setSelected: (value: number) => void;
+  selected: number;
+}) {
+  const handleClick = (id: number) => {
+    setSelected(id);
+    setShowSizeError(false);
   };
 
   return (
@@ -18,7 +26,7 @@ function ProductSizes({ sizes }: { sizes: ProductVariant[] }) {
             htmlFor={String(variantSize.id)}
             key={variantSize.id}
             className={`relative border ${
-              selected === variantSize.size ? "border-gray-600" : "border-gray-300"
+              selected === variantSize.id ? "border-gray-600" : "border-gray-300"
             }  text-center py-2 rounded-md ${
               variantSize.stock == 0 ? "bg-disabled" : ""
             }`}
@@ -27,10 +35,10 @@ function ProductSizes({ sizes }: { sizes: ProductVariant[] }) {
             <input
               id={String(variantSize.id)}
               type="radio"
-              name="size"
-              value={variantSize.size}
+              name="variantId"
+              value={variantSize.id}
               className="hidden"
-              onChange={handleChange}
+              onClick={() => handleClick(variantSize.id)}
             />
           </label>
         ))}
