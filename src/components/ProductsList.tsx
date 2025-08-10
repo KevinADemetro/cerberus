@@ -5,13 +5,22 @@ import { Prisma } from "@/generated/prisma/";
 function ProductsList({
   products,
 }: {
-  products: Prisma.ProductGetPayload<{ include: { category: true } }>[];
+  products: Prisma.ProductGetPayload<{
+    include: { category: true; variants: { take: 1 } };
+  }>[];
 }) {
   return (
     <div className="grid grid-cols-2 gap-x-2 gap-y-6 justify-center px-3">
       {products.map(
-        (product: Prisma.ProductGetPayload<{ include: { category: true } }>) => (
-          <Link href={`/${product.slug}`} key={product.id}>
+        (
+          product: Prisma.ProductGetPayload<{
+            include: { category: true; variants: { take: 1 } };
+          }>
+        ) => (
+          <Link
+            href={`/${product.slug}?cor=${product.variants[0].color}`}
+            key={product.id}
+          >
             <ProductCard product={product} />
           </Link>
         )

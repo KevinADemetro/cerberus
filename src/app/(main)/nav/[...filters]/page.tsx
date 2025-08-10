@@ -6,6 +6,7 @@ async function Page({ params }: { params: Promise<{ filters: string[] }> }) {
   const products = await prisma.product.findMany({
     include: {
       category: true,
+      variants: { take: 1 },
     },
   });
   const { filters: filtersParam } = await params;
