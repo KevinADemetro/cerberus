@@ -5,8 +5,9 @@ import Image from "next/image";
 import productPlaceholder from "@/public/productPlaceholder.jpg";
 import ProductColors from "@/src/components/ProductColors";
 import ProductSizes from "@/src/components/ProductSizes";
-import StickyButton from "@/src/components/StickyButton";
 import { StickyBottom } from "@/src/components/StickyBottom";
+import ProductDescription from "@/src/components/ProductDescription";
+import AddToCartForm from "@/src/components/AddToCartForm";
 
 async function page({
   params,
@@ -56,19 +57,8 @@ async function page({
         <Image src={productPlaceholder} alt="" className="object-cover w-full h-full" />
       </div>
       <ProductColors colors={colors} />
-      <ProductSizes sizes={product.variants} />
-
-      <StickyBottom>
-        <div className="mx-5 grid grid-cols-1">
-          <button className="text-white bg-black py-5 rounded-full">
-            Adicionar ao carrinho
-          </button>
-        </div>
-      </StickyBottom>
-      <ProductColors colors={colors} />
-      <ProductColors colors={colors} />
-      <ProductColors colors={colors} />
-      <ProductColors colors={colors} />
+      <AddToCartForm product={product} />
+      <ProductDescription description={product.description} />
     </>
   );
 }
