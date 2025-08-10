@@ -5,6 +5,7 @@ import Image from "next/image";
 import productPlaceholder from "@/public/productPlaceholder.jpg";
 import ProductColors from "@/src/components/ProductColors";
 import ProductSizes from "@/src/components/ProductSizes";
+import StickyButton from "@/src/components/StickyButton";
 
 async function page({
   params,
@@ -55,6 +56,11 @@ async function page({
       </div>
       <ProductColors colors={colors} />
       <ProductSizes sizes={product.variants} />
+      <div className="mx-5 sticky bottom-1">
+        <button className="text-white bg-black w-full py-5 rounded-full">
+          Adicionar ao carrinho
+        </button>
+      </div>
     </>
   );
 }
