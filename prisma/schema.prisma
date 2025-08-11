@@ -28,10 +28,28 @@ model ProductVariant{
   productId Int
   stock Int
   product Product @relation(fields: [productId], references: [id])
+  CartItem CartItem[]
 }
 
 model Category {
   id        Int     @id @default(autoincrement())
   title String
   products Product[]
+}
+
+model Cart {
+  id String @id @default(uuid())
+  userId Int
+  createdAt DateTime
+  updatedAt DateTime
+  cartItems CartItem[]
+}
+
+model CartItem {
+  id Int @id @default(autoincrement())
+  quantity Int
+  productVariantId Int
+  productVariant ProductVariant @relation(fields: [productVariantId], references: [id])
+  cartId String
+  cart Cart @relation(fields: [cartId], references: [id])
 }

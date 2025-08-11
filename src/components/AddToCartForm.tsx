@@ -23,8 +23,7 @@ function AddToCartForm({
 
     const variant = await getProductVariantBy(id);
     if (!variant) {
-      alert("deu ruim");
-      return;
+      throw new Error("Algo deu errado");
     }
 
     handleAddToCart(variant);
