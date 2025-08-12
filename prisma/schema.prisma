@@ -39,9 +39,9 @@ model Category {
 
 model Cart {
   id String @id @default(uuid())
-  userId Int
+  userId Int?
   createdAt DateTime
-  updatedAt DateTime
+  updatedAt DateTime?
   cartItems CartItem[]
 }
 
