@@ -94,3 +94,8 @@ export async function handleChangeQuantity(formData: FormData) {
 
   redirect("/carrinho");
 }
+
+export async function removeItem(cartItemId: number) {
+  await prisma.cartItem.delete({ where: { id: cartItemId } });
+  redirect("/carrinho");
+}

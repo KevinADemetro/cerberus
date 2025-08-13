@@ -1,10 +1,10 @@
 import { Prisma } from "@/generated/prisma";
 import Image from "next/image";
 import productPlaceholder from "@/public/productPlaceholder.jpg";
-import { TrashIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import FormAddQuantity from "./FormAddQuantity";
 import { formatCurrency } from "../utils/formatter";
+import RemoveCartItemButton from "./RemoveCartItemButton";
 function CartItem({
   cartItem,
 }: {
@@ -22,7 +22,7 @@ function CartItem({
         <Link href={`/${slug}?cor=${color}`}>
           <h3 className="mb-5 text-sm">{name}</h3>
         </Link>
-        <TrashIcon className="size-6" />
+        <RemoveCartItemButton cartItemId={cartItemId} />
       </div>
       <p className="text-xs">Quantidade: {quantity}</p>
       <p className="text-xs">Cor: {color}</p>
