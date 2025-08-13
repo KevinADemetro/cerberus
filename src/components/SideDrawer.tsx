@@ -24,6 +24,7 @@ const SideDrawerContext = createContext<SideDrawerContextType | undefined>(undef
 
 interface SideDrawerProps {
   children: ReactNode;
+  onClose?: () => void;
 }
 
 interface OpenProps {
@@ -43,9 +44,15 @@ interface SideDrawerComponent extends FC<SideDrawerProps> {
   Close: FC;
 }
 
-const SideDrawer: SideDrawerComponent = ({ children }: SideDrawerProps) => {
+const SideDrawer: SideDrawerComponent = ({
+  children,
+  onClose = () => {},
+}: SideDrawerProps) => {
   const [openName, setOpenName] = useState("");
-  const close = () => setOpenName("");
+  const close = () => {
+    onClose();
+    setOpenName("");
+  };
   const open = setOpenName;
   return (
     <SideDrawerContext.Provider value={{ openName, close, open }}>
@@ -97,3 +104,10 @@ SideDrawer.Window = Window;
 SideDrawer.Close = Close;
 
 export default SideDrawer;
+
+export function useSideDrawer() {
+  const context = useContext(SideDrawerContext);
+  if (!context) throw new Error("useSideDrawer must be used within a SideDrawer");
+
+  return context;
+}

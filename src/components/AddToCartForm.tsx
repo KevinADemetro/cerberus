@@ -5,6 +5,7 @@ import { StickyBottom } from "./StickyBottom";
 import { Prisma } from "@/generated/prisma";
 import { getProductVariantBy } from "../utils/productVariant";
 import { useState } from "react";
+import AddedToCartModal from "./AddedToCartModal";
 
 function AddToCartForm({
   product,
@@ -12,8 +13,8 @@ function AddToCartForm({
   product: Prisma.ProductGetPayload<{ include: { category: true; variants: true } }>;
 }) {
   const [showSizeError, setShowSizeError] = useState(false);
+  const [openAddeToModal, setOpenAddeToModal] = useState(false);
   const [selected, setSelected] = useState(0);
-
   async function handleSubmit(e: FormData) {
     const id = Number(e.get("variantId"));
     if (!id) {
@@ -26,12 +27,15 @@ function AddToCartForm({
       throw new Error("Algo deu errado");
     }
 
-    handleAddToCart(variant);
+    handleAddToCart(variant).then(() => {
+      setOpenAddeToModal(true);
+    });
     setSelected(0);
   }
 
   return (
     <>
+      {openAddeToModal && <AddedToCartModal onClose={() => setOpenAddeToModal(false)} />}
       <form id="addToCartForm" action={handleSubmit}>
         <ProductSizes
           sizes={product.variants}
