@@ -1,4 +1,5 @@
 import { Prisma } from "@/generated/prisma/";
+import CartItem from "./CartItem";
 
 function CartItemsList({
   cartItems,
@@ -10,7 +11,7 @@ function CartItemsList({
   return (
     <ul>
       {cartItems.map((item) => (
-        <p key={item.id}>{item.productVariant.product.name}</p>
+        <CartItem cartItem={item} key={item.id} />
       ))}
     </ul>
   );

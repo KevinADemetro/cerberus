@@ -9,6 +9,7 @@ async function Page() {
   const cartItems = await prisma.cartItem.findMany({
     include: { productVariant: { include: { product: true } } },
     where: { cartId: cartUuid?.value ?? "__invalid_id__" },
+    orderBy: { id: "desc" },
   });
 
   return (

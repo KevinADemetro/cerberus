@@ -52,4 +52,5 @@ model CartItem {
   productVariant ProductVariant @relation(fields: [productVariantId], references: [id])
   cartId String
   cart Cart @relation(fields: [cartId], references: [id])
+  @@unique([productVariantId, cartId])
 }
