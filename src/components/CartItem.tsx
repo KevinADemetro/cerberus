@@ -40,6 +40,23 @@ function CartItem({
         <FormAddQuantity quantity={quantity} cartItemId={cartItemId} />
         <strong>{formatCurrency(quantity * price)}</strong>
       </div>
+      <div className="mt-10">
+        <h3>Resumo</h3>
+        <dl className="text-sm flex flex-col gap-5 mt-5">
+          <div className="flex justify-between py-2 ">
+            <dt>Valor dos produtos</dt>
+            <dd>{formatCurrency(price)}</dd>
+          </div>
+          <div className="flex justify-between py-2 ">
+            <dt>Frete</dt>
+            <dd>Grátis</dd>
+          </div>
+          <div className="flex justify-between py-2 ">
+            <dt>Total da compra</dt>
+            <dd>{formatCurrency(price)}</dd>
+          </div>
+        </dl>
+      </div>
     </li>
   );
 }

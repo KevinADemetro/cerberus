@@ -96,6 +96,11 @@ export async function handleChangeQuantity(formData: FormData) {
 }
 
 export async function removeItem(cartItemId: number) {
-  await prisma.cartItem.delete({ where: { id: cartItemId } });
+  const cookieStore = await cookies();
+  const cartUuid = await cookieStore.get("cartUuid");
+
+  if (cartUuid) {
+    await prisma.cartItem.delete({ where: { id: cartItemId, cartId: cartUuid.value } });
+  }
   redirect("/carrinho");
 }
