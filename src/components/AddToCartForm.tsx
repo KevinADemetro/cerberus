@@ -21,9 +21,9 @@ function AddToCartForm({
     }>
   >({
     id: 0,
-    color: "",
     size: "",
     productId: 0,
+    colorId: 0,
     stock: 0,
     product: {
       id: 0,

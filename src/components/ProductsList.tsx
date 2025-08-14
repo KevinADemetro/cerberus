@@ -6,7 +6,7 @@ function ProductsList({
   products,
 }: {
   products: Prisma.ProductGetPayload<{
-    include: { category: true; variants: { take: 1 } };
+    include: { category: true; variants: true; productColorImages: true };
   }>[];
 }) {
   return (
@@ -14,11 +14,15 @@ function ProductsList({
       {products.map(
         (
           product: Prisma.ProductGetPayload<{
-            include: { category: true; variants: { take: 1 } };
+            include: {
+              category: true;
+              variants: true;
+              productColorImages: true;
+            };
           }>
         ) => (
           <Link
-            href={`/${product.slug}?cor=${product.variants[0].color}`}
+            href={`/${product.slug}?cor=${product.productColorImages[0].colorId}`}
             key={product.id}
           >
             <ProductCard product={product} />

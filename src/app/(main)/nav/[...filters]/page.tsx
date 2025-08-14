@@ -7,6 +7,7 @@ async function Page({ params }: { params: Promise<{ filters: string[] }> }) {
     include: {
       category: true,
       variants: { take: 1 },
+      productColorImages: { take: 1, orderBy: { id: "asc" } },
     },
   });
   const { filters: filtersParam } = await params;

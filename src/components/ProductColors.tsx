@@ -1,17 +1,18 @@
+import { ProductColorImage } from "@/generated/prisma";
 import Link from "next/link";
-function ProductColors({ colors }: { colors: string[] }) {
+import Image from "next/image";
+function ProductColors({ colorImages }: { colorImages: ProductColorImage[] }) {
   return (
     <div>
       <h3 className="ml-5 my-5">Cores</h3>
-      <div className="flex mx-1 gap-1">
-        {/*TODO mudar pela foto do produto pela cor*/}
-        {colors.map((color) => (
+      <div className="flex mx-1 gap-1 overflow-x-scroll">
+        {colorImages.map((colorImage: ProductColorImage) => (
           <Link
-            href={`?cor=${color}`}
-            key={color}
-            className="h-[123px] w-[123px] border border-black rounded-md"
+            href={`?cor=${colorImage.colorId}`}
+            key={colorImage.id}
+            className="relative aspect-square border h-28 rounded-md"
           >
-            {color}
+            <Image className="p-1" src={colorImage.imagePath} fill alt="" />
           </Link>
         ))}
       </div>

@@ -1,11 +1,11 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import SideDrawer, { useSideDrawer } from "./SideDrawer";
 import Link from "next/link";
 import Image from "next/image";
-import { Prisma } from "@/generated/prisma";
-import productPlaceholder from "@/public/productPlaceholder.jpg";
+import { Prisma, ProductColorImage } from "@/generated/prisma";
 import { formatCurrency } from "../utils/formatter";
+import { getImageByColorIdAndProductId } from "../utils/productImageColor";
 
 function AddedToCartModal({
   onClose,
@@ -31,18 +31,37 @@ function AddedToCartModalContent({
   }>;
 }) {
   const { open } = useSideDrawer();
+  const image = useRef<ProductColorImage>({
+    id: 0,
+    colorId: 0,
+    productId: 0,
+    imagePath: "",
+  });
 
   useEffect(() => {
+    async function fetchImage() {
+      const img = await getImageByColorIdAndProductId(
+        productVariant.colorId,
+        productVariant.productId
+      );
+      image.current = img;
+    }
+    fetchImage();
     open("addedToCart");
-  }, [open]);
+  }, [open, productVariant.colorId, productVariant.productId]);
 
   return (
     <SideDrawer.Window name="addedToCart" openPosition="top">
       <div className="flex flex-col justify-between h-full">
         <h2 className="my-2">Adicionado ao carrinho</h2>
         <div className="flex gap-2 text-sm">
-          <div className="w-1/3">
-            <Image src={productPlaceholder} alt="foto" />
+          <div className="relative w-1/3">
+            <Image
+              src={image.current.imagePath}
+              alt="foto"
+              fill
+              className="object-cover"
+            />
           </div>
           <ul className="flex flex-col justify-between">
             <li>{productVariant.product.name}</li>

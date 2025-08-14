@@ -2,7 +2,6 @@ import ProductCard from "@/src/components/ProductCard";
 import prisma from "@/src/lib/prisma";
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import productPlaceholder from "@/public/productPlaceholder.jpg";
 import ProductColors from "@/src/components/ProductColors";
 import ProductDescription from "@/src/components/ProductDescription";
 import AddToCartForm from "@/src/components/AddToCartForm";
@@ -15,9 +14,9 @@ async function page({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const { slug } = await params;
-  const color = (await searchParams).cor;
+  const colorId = Number((await searchParams).cor);
 
-  if (typeof color !== "string") {
+  if (isNaN(colorId)) {
     notFound();
   }
 
@@ -27,11 +26,11 @@ async function page({
       variants: {
         where: {
           color: {
-            equals: color,
-            mode: "insensitive",
+            id: colorId,
           },
         },
       },
+      productColorImages: { where: { colorId } },
     },
     where: { slug },
   });
@@ -40,21 +39,25 @@ async function page({
     notFound();
   }
 
-  const colorsGrouped = await prisma.productVariant.groupBy({
-    by: ["color"],
+  const colorsImagesGrouped = await prisma.productColorImage.findMany({
+    distinct: ["colorId"],
     where: { productId: product.id },
   });
-  const colors: string[] = colorsGrouped.map((item) => item.color);
 
   return (
     <>
       <div className="px-5">
         <ProductCard product={product} variant="page" />
       </div>
-      <div className="aspect-square w-full">
-        <Image src={productPlaceholder} alt="" className="object-cover w-full h-full" />
+      <div className="relative aspect-square w-full">
+        <Image
+          src={product.productColorImages[0].imagePath}
+          alt=""
+          fill
+          className="object-cover w-full h-full"
+        />
       </div>
-      <ProductColors colors={colors} />
+      <ProductColors colorImages={colorsImagesGrouped} />
       <AddToCartForm product={product} />
       <ProductDescription description={product.description} />
     </>

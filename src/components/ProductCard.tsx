@@ -2,14 +2,15 @@ import { Prisma } from "@/generated/prisma";
 import RatingStars from "../components/RatingStars";
 import { getDiscountedPrice } from "@/src/utils/product";
 import { formatCurrency } from "@/src/utils/formatter";
-import ProductPlaceholder from "@/public/productPlaceholder.jpg";
 import Image from "next/image";
 
 function ProductCard({
   product,
   variant = "list",
 }: {
-  product: Prisma.ProductGetPayload<{ include: { category: true } }>;
+  product: Prisma.ProductGetPayload<{
+    include: { category: true; productColorImages: { take: 1 } };
+  }>;
   variant?: string;
 }) {
   const { price, name, category, discountRate, starRating } = product;
@@ -19,8 +20,13 @@ function ProductCard({
   return (
     <div>
       {isList && (
-        <div className="aspect-square w-full">
-          <Image src={ProductPlaceholder} alt="placeholder" className="object-cover" />
+        <div className="relative aspect-square w-full">
+          <Image
+            src={product.productColorImages[0].imagePath}
+            alt={product.name}
+            fill
+            className="object-cover"
+          />
         </div>
       )}
 
