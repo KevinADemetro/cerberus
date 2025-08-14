@@ -4,270 +4,672 @@ import { PrismaClient, Prisma } from "../generated/prisma";
 const prisma = new PrismaClient();
 
 const categoriesData: Prisma.CategoryCreateInput[] = [
+  { title: "Camisetas" },
+  { title: "Shorts e bermudas" },
+  { title: "Calças" },
+  { title: "Moletons e Agasalhos" },
+  { title: "Roupas Esportivas" },
+];
+
+const colorsData: Prisma.ColorCreateInput[] = [
+  { name: "Branco" },
+  { name: "Azul" },
+  { name: "Verde" },
+  { name: "Cinza" },
+];
+
+const productsData: Prisma.ProductCreateInput[] = [
   {
-    title: "Casual",
-    products: {
+    name: "Camiseta Manga Curta",
+    slug: slugify("Camiseta Manga Curta"),
+    price: 70,
+    description: "",
+    starRating: 5,
+    discountRate: 10,
+    category: { connect: { id: 1 } },
+    variants: {
       create: [
-        {
-          name: "Tênis Conforto",
-          slug: slugify("Tênis Conforto"),
-          description: "Tênis confortável para uso diário, com design moderno.",
-          price: 120,
-          starRating: 4.5,
-          discountRate: 50,
-          variants: {
-            create: [
-              { color: "Preto", size: "37", stock: 5 },
-              { color: "Preto", size: "38", stock: 3 },
-              { color: "Preto", size: "39", stock: 3 },
-              { color: "Preto", size: "40", stock: 3 },
-              { color: "Preto", size: "41", stock: 2 },
-              { color: "Preto", size: "42", stock: 0 },
-              { color: "Preto", size: "43", stock: 0 },
-              { color: "Preto", size: "44", stock: 5 },
-              { color: "Branco", size: "40", stock: 4 },
-              { color: "Branco", size: "41", stock: 4 },
-              { color: "Branco", size: "42", stock: 4 },
-              { color: "Branco", size: "43", stock: 4 },
-              { color: "Branco", size: "45", stock: 4 },
-            ],
-          },
-        },
-        {
-          name: "Camisa Polo",
-          slug: slugify("Camisa Polo"),
-          description: "Camisa polo clássica, perfeita para ocasiões casuais e formais.",
-          price: 80,
-          starRating: 4.2,
-          discountRate: 40,
-          variants: {
-            create: [
-              { color: "Azul", size: "P", stock: 8 },
-              { color: "Azul", size: "M", stock: 6 },
-              { color: "Branca", size: "G", stock: 4 },
-              { color: "Branca", size: "GG", stock: 2 },
-            ],
-          },
-        },
-        {
-          name: "Calça Jeans Slim",
-          slug: slugify("Calça Jeans Slim"),
-          description: "Calça jeans slim fit que combina estilo e conforto.",
-          price: 150,
-          starRating: 4.8,
-          discountRate: 30,
-          variants: {
-            create: [
-              { color: "Azul Jeans", size: "38", stock: 5 },
-              { color: "Azul Jeans", size: "40", stock: 4 },
-              { color: "Preta", size: "42", stock: 3 },
-            ],
-          },
-        },
+        { color: { connect: { id: 1 } }, size: "P", stock: 50 },
+        { color: { connect: { id: 1 } }, size: "M", stock: 50 },
+        { color: { connect: { id: 1 } }, size: "G", stock: 50 },
+        { color: { connect: { id: 1 } }, size: "GG", stock: 50 },
+        { color: { connect: { id: 1 } }, size: "XG", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "P", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "M", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "G", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "GG", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "XG", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "P", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "M", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "G", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "GG", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "XG", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "P", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "M", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "G", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "GG", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "XG", stock: 50 },
       ],
     },
   },
   {
-    title: "Esportivo",
-    products: {
+    name: "Camiseta Manga Longa",
+    slug: slugify("Camiseta Manga Longa"),
+    price: 100,
+    description: "",
+    starRating: 5,
+    discountRate: 5,
+    category: { connect: { id: 1 } },
+    variants: {
       create: [
-        {
-          name: "Tênis de Corrida",
-          slug: slugify("Tênis de Corrida"),
-          description: "Tênis leve e respirável ideal para corrida e atividades físicas.",
-          price: 250,
-          starRating: 4.9,
-          discountRate: 35,
-          variants: {
-            create: [
-              { color: "Preto", size: "39", stock: 4 },
-              { color: "Preto", size: "40", stock: 6 },
-              { color: "Azul", size: "41", stock: 5 },
-            ],
-          },
-        },
-        {
-          name: "Camiseta Dry Fit",
-          slug: slugify("Camiseta Dry Fit"),
-          description: "Camiseta esportiva com tecido dry fit que mantém o corpo seco.",
-          price: 60,
-          starRating: 4.7,
-          discountRate: 55,
-          variants: {
-            create: [
-              { color: "Preto", size: "P", stock: 10 },
-              { color: "Preto", size: "M", stock: 8 },
-              { color: "Azul", size: "G", stock: 6 },
-            ],
-          },
-        },
-        {
-          name: "Shorts de Treino",
-          slug: slugify("Shorts de Treino"),
-          description: "Shorts confortáveis e leves para treinos intensos.",
-          price: 70,
-          starRating: 4.5,
-          discountRate: 45,
-          variants: {
-            create: [
-              { color: "Preto", size: "P", stock: 7 },
-              { color: "Preto", size: "M", stock: 5 },
-              { color: "Cinza", size: "G", stock: 4 },
-            ],
-          },
-        },
+        { color: { connect: { id: 1 } }, size: "P", stock: 50 },
+        { color: { connect: { id: 1 } }, size: "M", stock: 50 },
+        { color: { connect: { id: 1 } }, size: "G", stock: 50 },
+        { color: { connect: { id: 1 } }, size: "GG", stock: 50 },
+        { color: { connect: { id: 1 } }, size: "XG", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "P", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "M", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "G", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "GG", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "XG", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "P", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "M", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "G", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "GG", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "XG", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "P", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "M", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "G", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "GG", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "XG", stock: 50 },
       ],
     },
   },
   {
-    title: "Formal",
-    products: {
+    name: "Bermuda larga",
+    slug: slugify("Bermuda larga"),
+    price: 80,
+    description: "",
+    starRating: 5,
+    discountRate: 5,
+    category: { connect: { id: 2 } },
+    variants: {
       create: [
-        {
-          name: "Sapato Social Couro",
-          slug: slugify("Sapato Social Couro"),
-          description: "Sapato social em couro legítimo, ideal para eventos formais.",
-          price: 300,
-          starRating: 4.6,
-          discountRate: 25,
-          variants: {
-            create: [
-              { color: "Preto", size: "40", stock: 5 },
-              { color: "Preto", size: "41", stock: 3 },
-              { color: "Marrom", size: "42", stock: 4 },
-            ],
-          },
-        },
-        {
-          name: "Camisa Social Slim",
-          slug: slugify("Camisa Social Slim"),
-          description: "Camisa social slim fit com corte moderno e elegante.",
-          price: 150,
-          starRating: 4.4,
-          discountRate: 40,
-          variants: {
-            create: [
-              { color: "Branca", size: "P", stock: 6 },
-              { color: "Branca", size: "M", stock: 4 },
-              { color: "Azul Claro", size: "G", stock: 3 },
-            ],
-          },
-        },
-        {
-          name: "Gravata Seda",
-          slug: slugify("Gravata Seda"),
-          description: "Gravata feita em seda premium para um acabamento sofisticado.",
-          price: 90,
-          starRating: 4.3,
-          discountRate: 30,
-          variants: {
-            create: [
-              { color: "Preto", size: "Único", stock: 10 },
-              { color: "Vermelho", size: "Único", stock: 8 },
-            ],
-          },
-        },
+        { color: { connect: { id: 1 } }, size: "P", stock: 50 },
+        { color: { connect: { id: 1 } }, size: "M", stock: 50 },
+        { color: { connect: { id: 1 } }, size: "G", stock: 50 },
+        { color: { connect: { id: 1 } }, size: "GG", stock: 50 },
+        { color: { connect: { id: 1 } }, size: "XG", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "P", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "M", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "G", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "GG", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "XG", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "P", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "M", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "G", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "GG", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "XG", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "P", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "M", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "G", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "GG", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "XG", stock: 50 },
       ],
     },
   },
   {
-    title: "Acessórios",
-    products: {
+    name: "Calça de moletom",
+    slug: slugify("Calça de moletom"),
+    price: 120,
+    description: "",
+    starRating: 5,
+    discountRate: 5,
+    category: { connect: { id: 3 } },
+    variants: {
       create: [
-        {
-          name: "Relógio Esportivo",
-          slug: slugify("Relógio Esportivo"),
-          description: "Relógio com design esportivo e resistência à água.",
-          price: 200,
-          starRating: 4.8,
-          discountRate: 50,
-          variants: {
-            create: [
-              { color: "Preto", size: "Único", stock: 5 },
-              { color: "Prata", size: "Único", stock: 3 },
-            ],
-          },
-        },
-        {
-          name: "Boné Trucker",
-          slug: slugify("Boné Trucker"),
-          description: "Boné estilo trucker, ajustável e confortável.",
-          price: 45,
-          starRating: 4.5,
-          discountRate: 60,
-          variants: {
-            create: [
-              { color: "Preto", size: "Único", stock: 7 },
-              { color: "Azul", size: "Único", stock: 4 },
-            ],
-          },
-        },
-        {
-          name: "Cinto de Couro",
-          slug: slugify("Cinto de Couro"),
-          description: "Cinto de couro legítimo com fivela metálica resistente.",
-          price: 75,
-          starRating: 4.4,
-          discountRate: 35,
-          variants: {
-            create: [
-              { color: "Preto", size: "M", stock: 6 },
-              { color: "Marrom", size: "G", stock: 5 },
-            ],
-          },
-        },
+        { color: { connect: { id: 1 } }, size: "P", stock: 50 },
+        { color: { connect: { id: 1 } }, size: "M", stock: 50 },
+        { color: { connect: { id: 1 } }, size: "G", stock: 50 },
+        { color: { connect: { id: 1 } }, size: "GG", stock: 50 },
+        { color: { connect: { id: 1 } }, size: "XG", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "P", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "M", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "G", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "GG", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "XG", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "P", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "M", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "G", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "GG", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "XG", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "P", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "M", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "G", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "GG", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "XG", stock: 50 },
       ],
     },
   },
   {
-    title: "Inverno",
-    products: {
+    name: "Moletom com capuz",
+    slug: slugify("Moletom com capuz"),
+    price: 150,
+    description: "",
+    starRating: 5,
+    discountRate: 5,
+    category: { connect: { id: 4 } },
+    variants: {
       create: [
-        {
-          name: "Jaqueta de Couro",
-          slug: slugify("Jaqueta de Couro"),
-          description: "Jaqueta de couro legítimo, quente e estilosa para o inverno.",
-          price: 400,
-          starRating: 4.9,
-          discountRate: 20,
-          variants: {
-            create: [
-              { color: "Preta", size: "M", stock: 5 },
-              { color: "Preta", size: "G", stock: 4 },
-              { color: "Marrom", size: "GG", stock: 3 },
-            ],
-          },
-        },
-        {
-          name: "Moletom Canguru",
-          slug: slugify("Moletom Canguru"),
-          description: "Moletom com capuz, confortável e ideal para dias frios.",
-          price: 180,
-          starRating: 4.7,
-          discountRate: 50,
-          variants: {
-            create: [
-              { color: "Cinza", size: "P", stock: 6 },
-              { color: "Cinza", size: "M", stock: 5 },
-              { color: "Preto", size: "G", stock: 3 },
-            ],
-          },
-        },
-        {
-          name: "Cachecol de Lã",
-          slug: slugify("Cachecol de Lã"),
-          description: "Cachecol macio de lã para proteção e estilo.",
-          price: 60,
-          starRating: 4.6,
-          discountRate: 40,
-          variants: {
-            create: [
-              { color: "Preto", size: "Único", stock: 8 },
-              { color: "Vermelho", size: "Único", stock: 5 },
-            ],
-          },
-        },
+        { color: { connect: { id: 1 } }, size: "P", stock: 50 },
+        { color: { connect: { id: 1 } }, size: "M", stock: 50 },
+        { color: { connect: { id: 1 } }, size: "G", stock: 50 },
+        { color: { connect: { id: 1 } }, size: "GG", stock: 50 },
+        { color: { connect: { id: 1 } }, size: "XG", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "P", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "M", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "G", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "GG", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "XG", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "P", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "M", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "G", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "GG", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "XG", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "P", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "M", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "G", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "GG", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "XG", stock: 50 },
       ],
+    },
+  },
+  {
+    name: "Regata Masculina",
+    slug: slugify("Regata Masculina"),
+    price: 80,
+    description: "",
+    starRating: 5,
+    discountRate: 5,
+    category: { connect: { id: 5 } },
+    variants: {
+      create: [
+        { color: { connect: { id: 1 } }, size: "P", stock: 50 },
+        { color: { connect: { id: 1 } }, size: "M", stock: 50 },
+        { color: { connect: { id: 1 } }, size: "G", stock: 50 },
+        { color: { connect: { id: 1 } }, size: "GG", stock: 50 },
+        { color: { connect: { id: 1 } }, size: "XG", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "P", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "M", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "G", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "GG", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "XG", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "P", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "M", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "G", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "GG", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "XG", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "P", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "M", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "G", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "GG", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "XG", stock: 50 },
+      ],
+    },
+  },
+  {
+    name: "Regata feminina",
+    slug: slugify("Regata feminina"),
+    price: 90,
+    description: "",
+    starRating: 5,
+    discountRate: 5,
+    category: { connect: { id: 5 } },
+    variants: {
+      create: [
+        { color: { connect: { id: 1 } }, size: "P", stock: 50 },
+        { color: { connect: { id: 1 } }, size: "M", stock: 50 },
+        { color: { connect: { id: 1 } }, size: "G", stock: 50 },
+        { color: { connect: { id: 1 } }, size: "GG", stock: 50 },
+        { color: { connect: { id: 1 } }, size: "XG", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "P", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "M", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "G", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "GG", stock: 50 },
+        { color: { connect: { id: 2 } }, size: "XG", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "P", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "M", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "G", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "GG", stock: 50 },
+        { color: { connect: { id: 3 } }, size: "XG", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "P", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "M", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "G", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "GG", stock: 50 },
+        { color: { connect: { id: 4 } }, size: "XG", stock: 50 },
+      ],
+    },
+  },
+];
+
+const productsColorsImagesData: Prisma.ProductColorImageCreateInput[] = [
+  {
+    product: { connect: { id: 1 } },
+    imagePath: "https://demetrodigital.com.br/images/17.png",
+    color: {
+      connect: { id: 1 },
+    },
+  },
+  {
+    product: { connect: { id: 1 } },
+    imagePath: "https://demetrodigital.com.br/images/21.png",
+    color: {
+      connect: { id: 1 },
+    },
+  },
+
+  {
+    product: { connect: { id: 1 } },
+    imagePath: "https://demetrodigital.com.br/images/18.png",
+    color: {
+      connect: { id: 2 },
+    },
+  },
+  {
+    product: { connect: { id: 1 } },
+    imagePath: "https://demetrodigital.com.br/images/22.png",
+    color: {
+      connect: { id: 2 },
+    },
+  },
+
+  {
+    product: { connect: { id: 1 } },
+    imagePath: "https://demetrodigital.com.br/images/19.png",
+    color: {
+      connect: { id: 3 },
+    },
+  },
+  {
+    product: { connect: { id: 1 } },
+    imagePath: "https://demetrodigital.com.br/images/23.png",
+    color: {
+      connect: { id: 3 },
+    },
+  },
+
+  {
+    product: { connect: { id: 1 } },
+    imagePath: "https://demetrodigital.com.br/images/20.png",
+    color: {
+      connect: { id: 4 },
+    },
+  },
+  {
+    product: { connect: { id: 1 } },
+    imagePath: "https://demetrodigital.com.br/images/24.png",
+    color: {
+      connect: { id: 4 },
+    },
+  },
+
+  {
+    product: { connect: { id: 2 } },
+    imagePath: "https://demetrodigital.com.br/images/1.png",
+    color: {
+      connect: { id: 1 },
+    },
+  },
+  {
+    product: { connect: { id: 2 } },
+    imagePath: "https://demetrodigital.com.br/images/5.png",
+    color: {
+      connect: { id: 1 },
+    },
+  },
+
+  {
+    product: { connect: { id: 2 } },
+    imagePath: "https://demetrodigital.com.br/images/2.png",
+    color: {
+      connect: { id: 2 },
+    },
+  },
+  {
+    product: { connect: { id: 2 } },
+    imagePath: "https://demetrodigital.com.br/images/6.png",
+    color: {
+      connect: { id: 2 },
+    },
+  },
+
+  {
+    product: { connect: { id: 2 } },
+    imagePath: "https://demetrodigital.com.br/images/3.png",
+    color: {
+      connect: { id: 3 },
+    },
+  },
+  {
+    product: { connect: { id: 2 } },
+    imagePath: "https://demetrodigital.com.br/images/7.png",
+    color: {
+      connect: { id: 3 },
+    },
+  },
+
+  {
+    product: { connect: { id: 2 } },
+    imagePath: "https://demetrodigital.com.br/images/4.png",
+    color: {
+      connect: { id: 4 },
+    },
+  },
+  {
+    product: { connect: { id: 2 } },
+    imagePath: "https://demetrodigital.com.br/images/8.png",
+    color: {
+      connect: { id: 4 },
+    },
+  },
+
+  {
+    product: { connect: { id: 3 } },
+    imagePath: "https://demetrodigital.com.br/images/9.png",
+    color: {
+      connect: { id: 1 },
+    },
+  },
+  {
+    product: { connect: { id: 3 } },
+    imagePath: "https://demetrodigital.com.br/images/13.png",
+    color: {
+      connect: { id: 1 },
+    },
+  },
+
+  {
+    product: { connect: { id: 3 } },
+    imagePath: "https://demetrodigital.com.br/images/10.png",
+    color: {
+      connect: { id: 2 },
+    },
+  },
+  {
+    product: { connect: { id: 3 } },
+    imagePath: "https://demetrodigital.com.br/images/14.png",
+    color: {
+      connect: { id: 2 },
+    },
+  },
+
+  {
+    product: { connect: { id: 3 } },
+    imagePath: "https://demetrodigital.com.br/images/11.png",
+    color: {
+      connect: { id: 3 },
+    },
+  },
+  {
+    product: { connect: { id: 3 } },
+    imagePath: "https://demetrodigital.com.br/images/15.png",
+    color: {
+      connect: { id: 3 },
+    },
+  },
+
+  {
+    product: { connect: { id: 3 } },
+    imagePath: "https://demetrodigital.com.br/images/12.png",
+    color: {
+      connect: { id: 4 },
+    },
+  },
+  {
+    product: { connect: { id: 3 } },
+    imagePath: "https://demetrodigital.com.br/images/16.png",
+    color: {
+      connect: { id: 4 },
+    },
+  },
+
+  {
+    product: { connect: { id: 4 } },
+    imagePath: "https://demetrodigital.com.br/images/41.png",
+    color: {
+      connect: { id: 1 },
+    },
+  },
+  {
+    product: { connect: { id: 4 } },
+    imagePath: "https://demetrodigital.com.br/images/45.png",
+    color: {
+      connect: { id: 1 },
+    },
+  },
+
+  {
+    product: { connect: { id: 4 } },
+    imagePath: "https://demetrodigital.com.br/images/42.png",
+    color: {
+      connect: { id: 2 },
+    },
+  },
+  {
+    product: { connect: { id: 4 } },
+    imagePath: "https://demetrodigital.com.br/images/46.png",
+    color: {
+      connect: { id: 2 },
+    },
+  },
+
+  {
+    product: { connect: { id: 4 } },
+    imagePath: "https://demetrodigital.com.br/images/43.png",
+    color: {
+      connect: { id: 3 },
+    },
+  },
+  {
+    product: { connect: { id: 4 } },
+    imagePath: "https://demetrodigital.com.br/images/47.png",
+    color: {
+      connect: { id: 3 },
+    },
+  },
+
+  {
+    product: { connect: { id: 4 } },
+    imagePath: "https://demetrodigital.com.br/images/44.png",
+    color: {
+      connect: { id: 4 },
+    },
+  },
+  {
+    product: { connect: { id: 4 } },
+    imagePath: "https://demetrodigital.com.br/images/48.png",
+    color: {
+      connect: { id: 4 },
+    },
+  },
+
+  {
+    product: { connect: { id: 5 } },
+    imagePath: "https://demetrodigital.com.br/images/25.png",
+    color: {
+      connect: { id: 1 },
+    },
+  },
+  {
+    product: { connect: { id: 5 } },
+    imagePath: "https://demetrodigital.com.br/images/29.png",
+    color: {
+      connect: { id: 1 },
+    },
+  },
+
+  {
+    product: { connect: { id: 5 } },
+    imagePath: "https://demetrodigital.com.br/images/26.png",
+    color: {
+      connect: { id: 2 },
+    },
+  },
+  {
+    product: { connect: { id: 5 } },
+    imagePath: "https://demetrodigital.com.br/images/30.png",
+    color: {
+      connect: { id: 2 },
+    },
+  },
+
+  {
+    product: { connect: { id: 5 } },
+    imagePath: "https://demetrodigital.com.br/images/27.png",
+    color: {
+      connect: { id: 3 },
+    },
+  },
+  {
+    product: { connect: { id: 5 } },
+    imagePath: "https://demetrodigital.com.br/images/31.png",
+    color: {
+      connect: { id: 3 },
+    },
+  },
+
+  {
+    product: { connect: { id: 5 } },
+    imagePath: "https://demetrodigital.com.br/images/28.png",
+    color: {
+      connect: { id: 4 },
+    },
+  },
+  {
+    product: { connect: { id: 5 } },
+    imagePath: "https://demetrodigital.com.br/images/32.png",
+    color: {
+      connect: { id: 4 },
+    },
+  },
+
+  {
+    product: { connect: { id: 6 } },
+    imagePath: "https://demetrodigital.com.br/images/49.png",
+    color: {
+      connect: { id: 1 },
+    },
+  },
+  {
+    product: { connect: { id: 6 } },
+    imagePath: "https://demetrodigital.com.br/images/53.png",
+    color: {
+      connect: { id: 1 },
+    },
+  },
+
+  {
+    product: { connect: { id: 6 } },
+    imagePath: "https://demetrodigital.com.br/images/50.png",
+    color: {
+      connect: { id: 2 },
+    },
+  },
+  {
+    product: { connect: { id: 6 } },
+    imagePath: "https://demetrodigital.com.br/images/54.png",
+    color: {
+      connect: { id: 2 },
+    },
+  },
+
+  {
+    product: { connect: { id: 6 } },
+    imagePath: "https://demetrodigital.com.br/images/51.png",
+    color: {
+      connect: { id: 3 },
+    },
+  },
+  {
+    product: { connect: { id: 6 } },
+    imagePath: "https://demetrodigital.com.br/images/55.png",
+    color: {
+      connect: { id: 3 },
+    },
+  },
+
+  {
+    product: { connect: { id: 6 } },
+    imagePath: "https://demetrodigital.com.br/images/52.png",
+    color: {
+      connect: { id: 4 },
+    },
+  },
+  {
+    product: { connect: { id: 6 } },
+    imagePath: "https://demetrodigital.com.br/images/56.png",
+    color: {
+      connect: { id: 4 },
+    },
+  },
+
+  {
+    product: { connect: { id: 7 } },
+    imagePath: "https://demetrodigital.com.br/images/33.png",
+    color: {
+      connect: { id: 1 },
+    },
+  },
+  {
+    product: { connect: { id: 7 } },
+    imagePath: "https://demetrodigital.com.br/images/37.png",
+    color: {
+      connect: { id: 1 },
+    },
+  },
+
+  {
+    product: { connect: { id: 7 } },
+    imagePath: "https://demetrodigital.com.br/images/34.png",
+    color: {
+      connect: { id: 2 },
+    },
+  },
+  {
+    product: { connect: { id: 7 } },
+    imagePath: "https://demetrodigital.com.br/images/38.png",
+    color: {
+      connect: { id: 2 },
+    },
+  },
+
+  {
+    product: { connect: { id: 7 } },
+    imagePath: "https://demetrodigital.com.br/images/35.png",
+    color: {
+      connect: { id: 3 },
+    },
+  },
+  {
+    product: { connect: { id: 7 } },
+    imagePath: "https://demetrodigital.com.br/images/39.png",
+    color: {
+      connect: { id: 3 },
+    },
+  },
+
+  {
+    product: { connect: { id: 7 } },
+    imagePath: "https://demetrodigital.com.br/images/36.png",
+    color: {
+      connect: { id: 4 },
+    },
+  },
+  {
+    product: { connect: { id: 7 } },
+    imagePath: "https://demetrodigital.com.br/images/40.png",
+    color: {
+      connect: { id: 4 },
     },
   },
 ];
@@ -275,6 +677,17 @@ const categoriesData: Prisma.CategoryCreateInput[] = [
 export async function main() {
   for (const c of categoriesData) {
     await prisma.category.create({ data: c });
+  }
+
+  for (const c of colorsData) {
+    await prisma.color.create({ data: c });
+  }
+
+  for (const p of productsData) {
+    await prisma.product.create({ data: p });
+  }
+  for (const p of productsColorsImagesData) {
+    await prisma.productColorImage.create({ data: p });
   }
 }
 

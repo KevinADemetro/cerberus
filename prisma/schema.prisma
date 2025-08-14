@@ -7,30 +7,6 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
-model Product {
-  id    Int     @id @default(autoincrement())
-  name  String?
-  slug  String? @unique
-  price Float
-  description String
-  starRating Float
-  discountRate Int
-  variants ProductVariant[]
-  categoryId Int
-  category Category @relation(fields: [categoryId], references: [id])
-}
-
-model ProductVariant{
-  id Int @id @default(autoincrement())
-  color String
-  size String
-  productId Int
-  stock Int
-  product Product @relation(fields: [productId], references: [id])
-  CartItem CartItem[]
-}
-
 model Category {
   id        Int     @id @default(autoincrement())
   title String
@@ -53,4 +29,45 @@ model CartItem {
   cartId String
   cart Cart @relation(fields: [cartId], references: [id])
   @@unique([productVariantId, cartId])
+}
+model Product {
+  id    Int     @id @default(autoincrement())
+  name  String
+  slug  String @unique
+  price Float
+  description String
+  starRating Float
+  discountRate Int
+  productColorImages ProductColorImage[]
+  variants ProductVariant[]
+  categoryId Int
+  category Category @relation(fields: [categoryId], references: [id])
+}
+
+model ProductVariant{
+  id Int @id @default(autoincrement())
+  size String
+  productId Int
+  stock Int
+  colorId Int
+  color Color @relation(fields: [colorId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+  CartItem CartItem[]
+  @@unique([productId, size, colorId])
+}
+model Color {
+  id Int @id @default(autoincrement())
+  name String
+  productVariants ProductVariant[]
+  productColorImages ProductColorImage[]
+}
+
+model ProductColorImage{
+  id Int @id @default(autoincrement())
+  productId Int
+  product Product @relation(fields: [productId], references: [id])
+  colorId Int
+  color Color @relation(fields: [colorId], references: [id])
+  imagePath String
+  @@unique([productId, colorId, imagePath])
 }
