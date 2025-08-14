@@ -15,6 +15,31 @@ function AddToCartForm({
   const [showSizeError, setShowSizeError] = useState(false);
   const [openAddeToModal, setOpenAddeToModal] = useState(false);
   const [selected, setSelected] = useState(0);
+  const [productVariant, setProductVariant] = useState<
+    Prisma.ProductVariantGetPayload<{
+      include: { product: { include: { category: true } } };
+    }>
+  >({
+    id: 0,
+    color: "",
+    size: "",
+    productId: 0,
+    stock: 0,
+    product: {
+      id: 0,
+      slug: "",
+      name: "",
+      price: 0,
+      description: "",
+      starRating: 0,
+      discountRate: 0,
+      categoryId: 0,
+      category: {
+        id: 0,
+        title: "",
+      },
+    },
+  });
   async function handleSubmit(e: FormData) {
     const id = Number(e.get("variantId"));
     if (!id) {
@@ -30,12 +55,18 @@ function AddToCartForm({
     handleAddToCart(variant).then(() => {
       setOpenAddeToModal(true);
     });
+    setProductVariant(variant);
     setSelected(0);
   }
 
   return (
     <>
-      {openAddeToModal && <AddedToCartModal onClose={() => setOpenAddeToModal(false)} />}
+      {openAddeToModal && (
+        <AddedToCartModal
+          productVariant={productVariant}
+          onClose={() => setOpenAddeToModal(false)}
+        />
+      )}
       <form id="addToCartForm" action={handleSubmit}>
         <ProductSizes
           sizes={product.variants}
