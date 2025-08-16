@@ -1,15 +1,10 @@
 import { notFound } from "next/navigation";
 import ProductsList from "../../../../components/ProductsList";
-import prisma from "@/src/lib/prisma";
+import { getProductsVariantsWithImage } from "@/src/utils/productVariant";
 
 async function Page({ params }: { params: Promise<{ filters: string[] }> }) {
-  const products = await prisma.product.findMany({
-    include: {
-      category: true,
-      variants: { take: 1 },
-      productColorImages: { take: 1, orderBy: { id: "asc" } },
-    },
-  });
+  const products = await getProductsVariantsWithImage();
+
   const { filters: filtersParam } = await params;
 
   if (filtersParam.length % 2 !== 0) {
@@ -25,7 +20,7 @@ async function Page({ params }: { params: Promise<{ filters: string[] }> }) {
 
   return (
     <div>
-      <ProductsList products={products} />
+      <ProductsList products={products} />{" "}
     </div>
   );
 }

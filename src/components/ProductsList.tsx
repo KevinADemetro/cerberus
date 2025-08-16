@@ -1,34 +1,15 @@
 import Link from "next/link";
 import ProductCard from "./ProductCard";
-import { Prisma } from "@/generated/prisma/";
+import { ProductWithVariantAndImage } from "../utils/productVariant.types";
 
-function ProductsList({
-  products,
-}: {
-  products: Prisma.ProductGetPayload<{
-    include: { category: true; variants: true; productColorImages: true };
-  }>[];
-}) {
+function ProductsList({ products }: { products: ProductWithVariantAndImage[] }) {
   return (
     <div className="grid grid-cols-2 gap-x-2 gap-y-6 justify-center px-3">
-      {products.map(
-        (
-          product: Prisma.ProductGetPayload<{
-            include: {
-              category: true;
-              variants: true;
-              productColorImages: true;
-            };
-          }>
-        ) => (
-          <Link
-            href={`/${product.slug}?cor=${product.productColorImages[0].colorId}`}
-            key={product.id}
-          >
-            <ProductCard product={product} />
-          </Link>
-        )
-      )}
+      {products.map((product: ProductWithVariantAndImage, key: number) => (
+        <Link href={`/${product.slug}?cor=${product.colorId}`} key={key}>
+          <ProductCard product={product} />
+        </Link>
+      ))}
     </div>
   );
 }

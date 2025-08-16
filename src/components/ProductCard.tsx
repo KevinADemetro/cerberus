@@ -1,19 +1,17 @@
-import { Prisma } from "@/generated/prisma";
 import RatingStars from "../components/RatingStars";
 import { getDiscountedPrice } from "@/src/utils/product";
 import { formatCurrency } from "@/src/utils/formatter";
 import Image from "next/image";
+import { ProductWithVariantAndImage } from "@/src/utils/productVariant.types";
 
 function ProductCard({
   product,
   variant = "list",
 }: {
-  product: Prisma.ProductGetPayload<{
-    include: { category: true; productColorImages: { take: 1 } };
-  }>;
+  product: ProductWithVariantAndImage;
   variant?: string;
 }) {
-  const { price, name, category, discountRate, starRating } = product;
+  const { price, name, categoryName, discountRate, starRating, imagePath } = product;
   const discountedPrice = getDiscountedPrice(price, discountRate);
   const isList = variant === "list";
 
@@ -21,20 +19,13 @@ function ProductCard({
     <div>
       {isList && (
         <div className="relative aspect-square w-full">
-          <Image
-            src={product.productColorImages[0].imagePath}
-            alt={product.name}
-            fill
-            className="object-cover"
-          />
+          <Image src={imagePath} alt={`image-${name}`} fill className="object-cover" />
         </div>
       )}
 
       <div className="mt-3 font-medium">
         <h2 className={`${isList ? "text-sm" : "text-2xl"}`}>{name}</h2>
-        <p className={`${isList ? "text-sm text-gray-600" : ""} my-2`}>
-          {category.title}
-        </p>
+        <p className={`${isList ? "text-sm text-gray-600" : ""} my-2`}>{categoryName}</p>
         <div className={`${isList ? "" : "text-lg"} flex justify-between flex-wrap`}>
           <p className="">{formatCurrency(discountedPrice)}</p>
           <del className="text-gray-500">{formatCurrency(price)}</del>
