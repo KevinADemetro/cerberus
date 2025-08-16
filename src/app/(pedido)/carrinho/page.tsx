@@ -37,7 +37,7 @@ async function Page() {
           </div>
         </>
       ) : (
-        <p>Não tens carrinho chefia</p>
+        <p>Não tens nada no carrinho</p>
       )}
     </>
   );

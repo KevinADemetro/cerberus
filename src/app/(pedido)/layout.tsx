@@ -1,7 +1,10 @@
+import Link from "next/link";
 function PedidoLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <h1>Layout do pedido</h1>
+      <Link href="/">
+        <h1>Logo</h1>
+      </Link>
       <div>{children}</div>
     </>
   );
