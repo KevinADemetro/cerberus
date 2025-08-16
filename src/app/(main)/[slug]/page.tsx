@@ -29,6 +29,7 @@ async function page({
             id: colorId,
           },
         },
+        orderBy: { id: "desc" },
       },
       productColorImages: { where: { colorId } },
     },

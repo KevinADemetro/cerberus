@@ -4,7 +4,7 @@ import ProductSizes from "./ProductSizes";
 import { StickyBottom } from "./StickyBottom";
 import { Prisma } from "@/generated/prisma";
 import { getProductVariantBy } from "../utils/productVariant";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import AddedToCartModal from "./AddedToCartModal";
 
 function AddToCartForm({
@@ -15,35 +15,16 @@ function AddToCartForm({
   const [showSizeError, setShowSizeError] = useState(false);
   const [openAddeToModal, setOpenAddeToModal] = useState(false);
   const [selected, setSelected] = useState(0);
-  const [productVariant, setProductVariant] = useState<
-    Prisma.ProductVariantGetPayload<{
-      include: { product: { include: { category: true } } };
-    }>
-  >({
-    id: 0,
-    size: "",
-    productId: 0,
-    colorId: 0,
-    stock: 0,
-    product: {
-      id: 0,
-      slug: "",
-      name: "",
-      price: 0,
-      description: "",
-      starRating: 0,
-      discountRate: 0,
-      categoryId: 0,
-      category: {
-        id: 0,
-        title: "",
-      },
-    },
-  });
+  const sizeSectionRef = useRef<HTMLFormElement>(null);
+  const [productVariant, setProductVariant] = useState<Prisma.ProductVariantGetPayload<{
+    include: { product: { include: { category: true } } };
+  }> | null>(null);
+
   async function handleSubmit(e: FormData) {
     const id = Number(e.get("variantId"));
     if (!id) {
       setShowSizeError(true);
+      sizeSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
       return;
     }
 
@@ -61,13 +42,13 @@ function AddToCartForm({
 
   return (
     <>
-      {openAddeToModal && (
+      {openAddeToModal && productVariant && (
         <AddedToCartModal
           productVariant={productVariant}
           onClose={() => setOpenAddeToModal(false)}
         />
       )}
-      <form id="addToCartForm" action={handleSubmit}>
+      <form id="addToCartForm" action={handleSubmit} ref={sizeSectionRef}>
         <ProductSizes
           sizes={product.variants}
           setShowSizeError={setShowSizeError}
