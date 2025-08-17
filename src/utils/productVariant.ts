@@ -1,6 +1,7 @@
 "use server";
 import prisma from "../lib/prisma";
 import { ProductWithVariantAndImage } from "./productVariant.types";
+import { ProductVariantFilters } from "./productVariantFilters.schema";
 
 export async function getProductVariantBy(id: number) {
   const variant = await prisma.productVariant.findUnique({
@@ -10,8 +11,30 @@ export async function getProductVariantBy(id: number) {
   return variant;
 }
 
-export async function getProductsVariantsWithImage() {
-  const products = await prisma.$queryRaw<ProductWithVariantAndImage[]>`
+export async function getProductsVariantsWithImage(filter: ProductVariantFilters | null) {
+  const values: any[] = [];
+  const whereClauses: string[] = [];
+  if (filter) {
+    if (filter.cor) {
+      values.push(filter.cor);
+      whereClauses.push(`color."name" ILIKE $${values.length}`);
+    }
+
+    if (filter.categoria) {
+      values.push(filter.categoria);
+      whereClauses.push(`c.title ILIKE $${values.length}`);
+    }
+
+    if (filter.tamanho) {
+      values.push(filter.tamanho);
+      whereClauses.push(`pv.size ILIKE $${values.length}`);
+    }
+  }
+
+  const where = whereClauses.length > 0 ? `WHERE ${whereClauses.join(" AND ")}` : "";
+
+  const products = await prisma.$queryRawUnsafe<ProductWithVariantAndImage[]>(
+    `
   SELECT
     p.slug AS "slug",
     p.price,
@@ -25,12 +48,15 @@ export async function getProductsVariantsWithImage() {
   FROM "ProductVariant" pv
   JOIN "Product" p ON p.id = pv."productId"
   JOIN "Category" c ON c.id = p."categoryId"
+  JOIN "Color" color ON color.id = pv."colorId"
   LEFT JOIN "ProductColorImage" pci
     ON pci."productId" = pv."productId"
     AND pci."colorId" = pv."colorId"
+  ${where}
   GROUP BY pv."productId", pv."colorId", c.id, c.title, p.slug, p.price, p."discountRate", p."starRating"
-  ORDER BY pv."productId"
-`;
+  ORDER BY pv."productId"`,
+    ...values
+  );
 
   return products;
 }

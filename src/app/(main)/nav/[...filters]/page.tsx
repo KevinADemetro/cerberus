@@ -1,13 +1,12 @@
 import { notFound } from "next/navigation";
 import ProductsList from "../../../../components/ProductsList";
 import { getProductsVariantsWithImage } from "@/src/utils/productVariant";
+import { parseProductVariantFilters } from "@/src/utils/productVariantFilters";
 
 async function Page({ params }: { params: Promise<{ filters: string[] }> }) {
-  const products = await getProductsVariantsWithImage();
-
   const { filters: filtersParam } = await params;
 
-  if (filtersParam.length % 2 !== 0) {
+  if (filtersParam.length % 2 !== 0 && filtersParam.length !== 0) {
     notFound();
   }
   const filtros: Record<string, string> = {};
@@ -18,9 +17,12 @@ async function Page({ params }: { params: Promise<{ filters: string[] }> }) {
     filtros[chave] = valor;
   }
 
+  const products = await getProductsVariantsWithImage(
+    parseProductVariantFilters(filtros)
+  );
   return (
     <div>
-      <ProductsList products={products} />{" "}
+      <ProductsList products={products} />
     </div>
   );
 }
