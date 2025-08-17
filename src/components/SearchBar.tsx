@@ -6,7 +6,12 @@ function SearchBar() {
       <button className="rounded-full bg-background p-2">
         <MagnifyingGlassIcon className="size-4" />
       </button>
-      <input type="text" className="w-[100%] ml-2 outline-none" placeholder="Buscar" />
+      <input
+        type="text"
+        name="term"
+        className="w-[100%] ml-2 outline-none"
+        placeholder="Buscar"
+      />
     </form>
   );
 }
