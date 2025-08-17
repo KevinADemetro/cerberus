@@ -3,8 +3,15 @@ import ProductsList from "../../../../components/ProductsList";
 import { getProductsVariantsWithImage } from "@/src/utils/productVariant";
 import { parseProductVariantFilters } from "@/src/utils/productVariantFilters";
 
-async function Page({ params }: { params: Promise<{ filters: string[] }> }) {
+async function Page({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ filters: string[] }>;
+  searchParams: Promise<{ term: string }>;
+}) {
   const { filters: filtersParam } = await params;
+  const { term } = await searchParams;
 
   if (filtersParam.length % 2 !== 0 && filtersParam.length !== 0) {
     notFound();
@@ -15,6 +22,9 @@ async function Page({ params }: { params: Promise<{ filters: string[] }> }) {
     const chave = filtersParam[i];
     const valor = filtersParam[i + 1];
     filtros[chave] = valor;
+  }
+  if (term) {
+    filtros["productName"] = term;
   }
 
   const products = await getProductsVariantsWithImage(

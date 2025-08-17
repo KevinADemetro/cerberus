@@ -5,6 +5,7 @@ export const productVariantFiltersSchema = z
     cor: z.string().optional(),
     tamanho: z.string().optional(),
     categoria: z.string().optional(),
+    productName: z.string().optional(),
   })
   .strict();
 

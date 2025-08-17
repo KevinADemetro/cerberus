@@ -29,6 +29,11 @@ export async function getProductsVariantsWithImage(filter: ProductVariantFilters
       values.push(filter.tamanho);
       whereClauses.push(`pv.size ILIKE $${values.length}`);
     }
+
+    if (filter.productName) {
+      values.push(`%${filter.productName}%`);
+      whereClauses.push(`p.name ILIKE $${values.length}`);
+    }
   }
 
   const where = whereClauses.length > 0 ? `WHERE ${whereClauses.join(" AND ")}` : "";
