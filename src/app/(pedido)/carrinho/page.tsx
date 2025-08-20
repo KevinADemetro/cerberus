@@ -2,8 +2,8 @@ import CartItemsList from "@/src/components/CartItemsList";
 import StepForward from "@/src/components/StepForward";
 import prisma from "@/src/lib/prisma";
 import { formatCurrency } from "@/src/utils/formatter";
+import { calculateOrderTotal } from "@/src/utils/orderTotals";
 import { cookies } from "next/headers";
-import Link from "next/link";
 
 async function Page() {
   const cookieStore = await cookies();
@@ -14,7 +14,7 @@ async function Page() {
     where: { cartId: cartUuid?.value ?? "__invalid_id__" },
     orderBy: { id: "desc" },
   });
-
+  const { subtotal, discount, shipping, total } = calculateOrderTotal(cartItems);
   return (
     <>
       {cartItems.length ? (
@@ -25,15 +25,15 @@ async function Page() {
             <dl className="text-sm flex flex-col gap-5 mt-5">
               <div className="flex justify-between py-2 ">
                 <dt>Valor dos produtos</dt>
-                <dd>{formatCurrency(123)}</dd>
+                <dd>{formatCurrency(subtotal)}</dd>
               </div>
               <div className="flex justify-between py-2 ">
                 <dt>Frete</dt>
-                <dd>Grátis</dd>
+                <dd>{formatCurrency(shipping)}</dd>
               </div>
               <div className="flex justify-between py-2 ">
                 <dt>Total da compra</dt>
-                <dd>{formatCurrency(123)}</dd>
+                <dd>{formatCurrency(total)}</dd>
               </div>
             </dl>
           </div>
