@@ -1,7 +1,9 @@
 import CartItemsList from "@/src/components/CartItemsList";
+import StepForward from "@/src/components/StepForward";
 import prisma from "@/src/lib/prisma";
 import { formatCurrency } from "@/src/utils/formatter";
 import { cookies } from "next/headers";
+import Link from "next/link";
 
 async function Page() {
   const cookieStore = await cookies();
@@ -35,6 +37,7 @@ async function Page() {
               </div>
             </dl>
           </div>
+          <StepForward href="/checkout" />
         </>
       ) : (
         <p>Não tens nada no carrinho</p>
