@@ -71,3 +71,16 @@ model ProductColorImage{
   imagePath String
   @@unique([productId, colorId, imagePath])
 }
+
+model account{
+  id String @id @default(uuid())
+  email String @unique
+  password String?
+  cpf String @unique
+  isGuest Boolean @default(true)
+  fullName String
+  birthDate DateTime
+  phone String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
