@@ -2,45 +2,62 @@
 import InputField from "./InputField";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Account, accountSchema } from "../utils/account.schema";
+import { User, userSchema } from "../utils/user.schema";
+import { useHookFormMask } from "use-mask-input";
+import { createGuestUser } from "../utils/user";
 
 function CheckoutForm() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
-  } = useForm<Account>({ resolver: zodResolver(accountSchema) });
-  const onSubmit: SubmitHandler<Account> = (data) => console.log(data);
+  } = useForm<User>({ resolver: zodResolver(userSchema) });
 
-  console.log(errors);
+  const onSubmit: SubmitHandler<User> = (data) => {
+    createGuestUser(data);
+    console.log(data);
+  };
+
+  const registerWithMask = useHookFormMask(register);
+
   return (
     <>
       <form className="flex flex-col gap-3" onSubmit={handleSubmit(onSubmit)}>
-        <InputField<Account>
+        <InputField<User>
           placeholder="000.000.000-00"
           label="Informe seu CPF"
           field="cpf"
-          register={register}
+          inputMode="numeric"
+          registerWithMask={registerWithMask}
+          mask="999.999.999-99"
+          error={errors["cpf"]}
         />
-        <InputField<Account>
+        <InputField<User>
           placeholder="DD/MM/AAAA"
           label="Data de nascimento"
           field="birthDate"
-          register={register}
+          registerWithMask={registerWithMask}
+          mask="99/99/9999"
+          error={errors["birthDate"]}
         />
-        <InputField<Account>
+        <InputField<User>
           placeholder="Ex: nome@example.com"
           label="E-mail"
           field="email"
+          inputMode="email"
           register={register}
+          error={errors["email"]}
         />
 
-        <InputField<Account>
+        <InputField<User>
           placeholder="(99) 99999-9999"
           label="Telefone"
-          field="fone"
+          field="phone"
           register={register}
+          registerWithMask={registerWithMask}
+          mask="(99) [9]9999-9999"
+          error={errors["phone"]}
+          inputMode="numeric"
         />
         <button>Continuar para endereço</button>
       </form>

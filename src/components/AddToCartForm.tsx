@@ -1,5 +1,5 @@
 "use client";
-import { handleAddToCart } from "@/src/actions/cart";
+import { handleAddToCart } from "@/src/utils/cart";
 import ProductSizes from "./ProductSizes";
 import { StickyBottom } from "./StickyBottom";
 import { Prisma } from "@/generated/prisma";

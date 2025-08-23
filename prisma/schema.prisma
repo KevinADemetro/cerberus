@@ -72,13 +72,13 @@ model ProductColorImage{
   @@unique([productId, colorId, imagePath])
 }
 
-model account{
+model User{
   id String @id @default(uuid())
   email String @unique
   password String?
   cpf String @unique
   isGuest Boolean @default(true)
-  fullName String
+  fullName String?
   birthDate DateTime
   phone String?
   createdAt   DateTime  @default(now())
