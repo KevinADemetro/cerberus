@@ -11,11 +11,20 @@ function CheckoutForm() {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm<User>({ resolver: zodResolver(userSchema) });
 
-  const onSubmit: SubmitHandler<User> = (data) => {
-    createGuestUser(data);
-    console.log(data);
+  const onSubmit: SubmitHandler<User> = async (data) => {
+    const error = await createGuestUser(data);
+    console.log(errors);
+    if (error) {
+      if (error.field && error.message) {
+        setError(error.field as keyof User, {
+          type: "server",
+          message: error.message,
+        });
+      }
+    }
   };
 
   const registerWithMask = useHookFormMask(register);
