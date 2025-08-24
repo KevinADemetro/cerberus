@@ -4,7 +4,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User, userSchema } from "../utils/user.schema";
 import { useHookFormMask } from "use-mask-input";
-import { createGuestUser } from "../utils/user";
+import { createGuestUser, getUser } from "../utils/user";
+import { useEffect } from "react";
 
 function CheckoutForm() {
   const {
@@ -12,11 +13,19 @@ function CheckoutForm() {
     handleSubmit,
     formState: { errors },
     setError,
+    reset,
   } = useForm<User>({ resolver: zodResolver(userSchema) });
+
+  useEffect(() => {
+    async function fetchUser() {
+      const userData = await getUser();
+      reset(userData);
+    }
+    fetchUser();
+  }, [reset]);
 
   const onSubmit: SubmitHandler<User> = async (data) => {
     const error = await createGuestUser(data);
-    console.log(errors);
     if (error) {
       if (error.field && error.message) {
         setError(error.field as keyof User, {

@@ -2,9 +2,10 @@
 
 import { cookies } from "next/headers";
 import prisma from "../lib/prisma";
-import { User } from "./user.schema";
+import { type User as ZodUser } from "../utils/user.schema";
+import type { User as PrismaUser } from "../../generated/prisma";
 
-export async function createGuestUser(guestUser: User) {
+export async function createGuestUser(guestUser: ZodUser) {
   const cookieStore = await cookies();
   const userUuid = await cookieStore.get("userUuid");
   try {
@@ -31,4 +32,28 @@ export async function createGuestUser(guestUser: User) {
     }
     return { field: "general", message: "Erro inesperado" };
   }
+}
+
+export async function getUser() {
+  const cookieStore = await cookies();
+  const userUuid = await cookieStore.get("userUuid");
+  if (userUuid) {
+    const user = await prisma.user.findUniqueOrThrow({ where: { id: userUuid.value } });
+    return mapPrismaUserToZod(user);
+  }
+}
+
+export async function mapPrismaUserToZod(user: PrismaUser) {
+  return {
+    cpf: user.cpf,
+    email: user.email,
+    phone: user.phone ?? undefined,
+    birthDate: user.birthDate
+      ? `${user.birthDate.getDate().toString().padStart(2, "0")}/${(
+          user.birthDate.getMonth() + 1
+        )
+          .toString()
+          .padStart(2, "0")}/${user.birthDate.getFullYear()}`
+      : "",
+  };
 }
