@@ -87,7 +87,11 @@ function PersonalDataForm({ onSubmitSuccess }: { onSubmitSuccess: () => void }) 
           error={errors["phone"]}
           inputMode="numeric"
         />
-        {showButton && <button>Continuar para endereço</button>}
+        {showButton && (
+          <button className="bg-black text-white w-full text-center py-3 rounded-full cursor-pointer">
+            Continuar para endereço
+          </button>
+        )}
       </form>
     </>
   );

@@ -6,6 +6,7 @@ import { Address, addressSchema } from "../utils/address.schema";
 import { useHookFormMask } from "use-mask-input";
 import { createAddress, getAddress } from "../utils/address";
 import { useEffect, useState } from "react";
+import { redirect } from "next/navigation";
 
 export default function AddressForm() {
   const {
@@ -20,6 +21,7 @@ export default function AddressForm() {
 
   const registerWithMask = useHookFormMask(register);
   const [step, setStep] = useState<"cep" | "full">("cep");
+  const [guestAddress, setGuestAddress] = useState<Address | null>(null);
 
   useEffect(() => {
     async function fetchAddress() {
@@ -27,6 +29,7 @@ export default function AddressForm() {
       if (addressData) {
         reset(addressData);
         setStep("full");
+        setGuestAddress(addressData);
       }
     }
     fetchAddress();
@@ -55,9 +58,18 @@ export default function AddressForm() {
   };
 
   const handleFullSubmit: SubmitHandler<Address> = async (data) => {
-    const error = await createAddress(data);
-    if (error?.field && error.message) {
-      setError(error.field as keyof Address, { type: "server", message: error.message });
+    if (!guestAddress) {
+      const error = await createAddress(data);
+      if (error?.field && error.message) {
+        setError(error.field as keyof Address, {
+          type: "server",
+          message: error.message,
+        });
+      } else {
+        redirect("/checkout/pagamento");
+      }
+    } else {
+      redirect("/checkout/pagamento");
     }
   };
 
@@ -77,7 +89,11 @@ export default function AddressForm() {
           error={errors.cep}
         />
 
-        <button type="button" onClick={handleCepSubmit}>
+        <button
+          className="bg-black text-white w-full text-center py-3 rounded-full cursor-pointer"
+          type="button"
+          onClick={handleCepSubmit}
+        >
           {step === "cep" ? "Continuar" : "Alterar CEP"}
         </button>
 
@@ -132,7 +148,9 @@ export default function AddressForm() {
               register={register}
               error={errors.state}
             />
-            <button>Salvar endereço</button>
+            <button className="bg-black text-white w-full text-center py-3 rounded-full cursor-pointer">
+              Continuar
+            </button>
           </>
         )}
       </form>
