@@ -1,7 +1,7 @@
 "use server";
 import { Prisma } from "@/generated/prisma";
 import { cookies } from "next/headers";
-import prisma from "../lib/prisma";
+import prisma from "../../lib/prisma";
 import { redirect } from "next/navigation";
 
 export async function handleAddToCart(variant: Prisma.ProductVariantGetPayload<object>) {
@@ -103,4 +103,15 @@ export async function removeItem(cartItemId: number) {
     await prisma.cartItem.delete({ where: { id: cartItemId, cartId: cartUuid.value } });
   }
   redirect("/carrinho");
+}
+
+export async function getCartItems() {
+  const cookieStore = await cookies();
+  const cartUuid = await cookieStore.get("cartUuid");
+  const res = await prisma.cartItem.findMany({
+    include: { productVariant: { include: { product: true } } },
+    where: { cartId: cartUuid?.value ?? "__invalid_id__" },
+    orderBy: { id: "desc" },
+  });
+  return res;
 }

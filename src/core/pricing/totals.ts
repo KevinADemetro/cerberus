@@ -1,5 +1,5 @@
 import { Prisma } from "@/generated/prisma";
-import { OrderTotals } from "./orderTotals.types";
+import { PricingTotals } from "@/src/core/pricing/pricingTotals.type";
 
 function getProductsSubtotal(
   cartItems: Prisma.CartItemGetPayload<{
@@ -32,12 +32,12 @@ function calculateShipping(): number {
   return 10;
 }
 
-export function calculateOrderTotal(
+export function calculateTotal(
   items: Prisma.CartItemGetPayload<{
     include: { productVariant: { include: { product: true } } };
   }>[],
   coupon?: { type: "percent" | "fixed"; value: number }
-): OrderTotals {
+): PricingTotals {
   const subtotal = getProductsSubtotal(items);
   const discount = calculateDiscount(subtotal, coupon);
   const shipping = calculateShipping();

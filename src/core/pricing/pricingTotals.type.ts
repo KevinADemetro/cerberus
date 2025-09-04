@@ -1,4 +1,4 @@
-export type OrderTotals = {
+export type PricingTotals = {
   subtotal: number;
   discount: number;
   shipping: number;

@@ -1,42 +1,18 @@
-import CartItemsList from "@/src/components/CartItemsList";
+import CartItemsList from "@/src/features/cart/components/CartItemsList";
 import StepForward from "@/src/components/StepForward";
-import prisma from "@/src/lib/prisma";
-import { formatCurrency } from "@/src/utils/formatter";
-import { calculateOrderTotal } from "@/src/utils/orderTotals";
-import { cookies } from "next/headers";
+import { calculateTotal } from "@/src/core/pricing/totals";
+import { getCartItems } from "@/src/features/cart/serverActions";
+import PricingSummary from "@/src/core/pricing/components/PricingSummary";
 
 async function Page() {
-  const cookieStore = await cookies();
-  const cartUuid = await cookieStore.get("cartUuid");
-
-  const cartItems = await prisma.cartItem.findMany({
-    include: { productVariant: { include: { product: true } } },
-    where: { cartId: cartUuid?.value ?? "__invalid_id__" },
-    orderBy: { id: "desc" },
-  });
-  const { subtotal, discount, shipping, total } = calculateOrderTotal(cartItems);
+  const cartItems = await getCartItems();
+  const totals = calculateTotal(cartItems);
   return (
     <>
       {cartItems.length ? (
         <>
           <CartItemsList cartItems={cartItems} />
-          <div className="mt-10 p-5">
-            <h3>Resumo</h3>
-            <dl className="text-sm flex flex-col gap-5 mt-5">
-              <div className="flex justify-between py-2 ">
-                <dt>Valor dos produtos</dt>
-                <dd>{formatCurrency(subtotal)}</dd>
-              </div>
-              <div className="flex justify-between py-2 ">
-                <dt>Frete</dt>
-                <dd>{formatCurrency(shipping)}</dd>
-              </div>
-              <div className="flex justify-between py-2 ">
-                <dt>Total da compra</dt>
-                <dd>{formatCurrency(total)}</dd>
-              </div>
-            </dl>
-          </div>
+          <PricingSummary totals={totals} />
           <StepForward href="/checkout" />
         </>
       ) : (
