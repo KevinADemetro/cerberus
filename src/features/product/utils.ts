@@ -1,7 +1,4 @@
-import {
-  productVariantFiltersSchema,
-  ProductVariantFilters,
-} from "./productVariantFilters.schema";
+import { productVariantFiltersSchema, ProductVariantFilters } from "./product.schemas";
 
 export function parseProductVariantFilters(
   raw: Record<string, string>

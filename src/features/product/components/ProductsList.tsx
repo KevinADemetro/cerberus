@@ -1,6 +1,6 @@
 import Link from "next/link";
 import ProductCard from "./ProductCard";
-import { ProductWithVariantAndImage } from "../utils/productVariant.types";
+import { ProductWithVariantAndImage } from "../product.types";
 
 function ProductsList({ products }: { products: ProductWithVariantAndImage[] }) {
   return (

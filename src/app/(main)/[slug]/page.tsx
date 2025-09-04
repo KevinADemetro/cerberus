@@ -1,10 +1,10 @@
-import ProductCard from "@/src/components/ProductCard";
+import ProductCard from "@/src/features/product/components/ProductCard";
 import prisma from "@/src/lib/prisma";
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import ProductColors from "@/src/components/ProductColors";
-import ProductDescription from "@/src/components/ProductDescription";
-import AddToCartForm from "@/src/components/AddToCartForm";
+import ProductColors from "@/src/features/product/components/ProductColors";
+import ProductDescription from "@/src/features/product/components/ProductDescription";
+import AddToCartForm from "@/src/features/cart/components/AddToCartForm";
 
 async function page({
   params,

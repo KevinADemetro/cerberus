@@ -1,24 +1,24 @@
 "use client";
-import { handleAddToCart } from "@/src/features/cart/serverActions";
-import ProductSizes from "./ProductSizes";
-import { StickyBottom } from "./StickyBottom";
-import { Prisma } from "@/generated/prisma";
-import { getProductVariantBy } from "../utils/productVariant";
 import { useRef, useState } from "react";
-import AddedToCartModal from "./AddedToCartModal";
 
-function AddToCartForm({
-  product,
-}: {
-  product: Prisma.ProductGetPayload<{ include: { category: true; variants: true } }>;
-}) {
+import AddedToCartModal from "./AddedToCartModal";
+import { handleAddToCart } from "@/src/features/cart/serverActions";
+import ProductSizes from "../../product/components/ProductSizes";
+import { getProductVariantBy } from "../../product/serverAction";
+import { StickyBottom } from "@/src/components/StickyBottom";
+import {
+  ProductFull,
+  ProductVariantWithCategory,
+} from "@/src/features/product/product.types";
+
+function AddToCartForm({ product }: { product: ProductFull }) {
   const [showSizeError, setShowSizeError] = useState(false);
   const [openAddeToModal, setOpenAddeToModal] = useState(false);
   const [selected, setSelected] = useState(0);
   const sizeSectionRef = useRef<HTMLFormElement>(null);
-  const [productVariant, setProductVariant] = useState<Prisma.ProductVariantGetPayload<{
-    include: { product: { include: { category: true } } };
-  }> | null>(null);
+  const [productVariant, setProductVariant] = useState<ProductVariantWithCategory | null>(
+    null
+  );
 
   async function handleSubmit(e: FormData) {
     const id = Number(e.get("variantId"));

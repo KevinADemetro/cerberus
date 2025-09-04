@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import ProductsList from "../../../../components/ProductsList";
+import ProductsList from "../../../../features/product/components/ProductsList";
 import { getProductsVariantsWithImage } from "@/src/utils/productVariant";
 import { parseProductVariantFilters } from "@/src/utils/productVariantFilters";
 

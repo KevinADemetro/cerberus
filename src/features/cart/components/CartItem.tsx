@@ -1,11 +1,11 @@
 import Link from "next/link";
-import FormAddQuantity from "@/src/features/cart/FormAddQuantity";
+import FormAddQuantity from "@/src/features/cart/components/FormAddQuantity";
 import { formatCurrency } from "@/src/utils/formatter";
 import RemoveCartItemButton from "./RemoveCartItemButton";
-import { getImageByColorIdAndProductId } from "@/src/utils/productImageColor";
+import { getImageByColorIdAndProductId } from "@/src/features/product/serverAction";
 import prisma from "@/src/lib/prisma";
 import { CartItemWithProduct } from "../CartItem.types";
-import ProductImage from "@/src/components/ProductImage";
+import ProductImage from "@/src/features/product/components/ProductImage";
 
 async function CartItem({ cartItem }: { cartItem: CartItemWithProduct }) {
   const { productVariant, quantity, id: cartItemId } = cartItem;
@@ -28,7 +28,7 @@ async function CartItem({ cartItem }: { cartItem: CartItemWithProduct }) {
       <p className="text-xs">Quantidade: {quantity}</p>
       <p className="text-xs">Cor: {colorName}</p>
       <p className="text-xs">Tamanho: {size}</p>
-      <ProductImage imagePath={image.imagePath} link={link} />
+      <ProductImage imagePath={image.imagePath} link={link} className="my-5" />
       <div className="flex justify-between items-center">
         <FormAddQuantity quantity={quantity} cartItemId={cartItemId} />
         <strong>{formatCurrency(quantity * price)}</strong>

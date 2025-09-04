@@ -13,6 +13,10 @@ export function formatOneDecimal(value: number): string {
   return value.toFixed(1);
 }
 
+export function formatPercent(value: number) {
+  return `${value}%`;
+}
+
 export function slugify(text: string): string {
   return text
     .toLowerCase()

@@ -1,8 +1,8 @@
-import RatingStars from "../components/RatingStars";
-import { getDiscountedPrice } from "@/src/utils/product";
-import { formatCurrency } from "@/src/utils/formatter";
-import Image from "next/image";
-import { ProductWithVariantAndImage } from "@/src/utils/productVariant.types";
+import RatingStars from "@/src/components/RatingStars";
+import { formatCurrency, formatPercent } from "@/src/utils/formatter";
+import { getDiscountedPrice } from "@/src/core/pricing/pricing";
+import { ProductWithVariantAndImage } from "../product.types";
+import ProductImage from "./ProductImage";
 
 function ProductCard({
   product,
@@ -17,11 +17,7 @@ function ProductCard({
 
   return (
     <div>
-      {isList && (
-        <div className="relative aspect-square w-full">
-          <Image src={imagePath} alt={`image-${name}`} fill className="object-cover" />
-        </div>
-      )}
+      {isList && <ProductImage imagePath={imagePath} />}
 
       <div className="mt-3 font-medium">
         <h2 className={`${isList ? "text-sm" : "text-2xl"}`}>{name}</h2>
@@ -29,7 +25,7 @@ function ProductCard({
         <div className={`${isList ? "" : "text-lg"} flex justify-between flex-wrap`}>
           <p className="">{formatCurrency(discountedPrice)}</p>
           <del className="text-gray-500">{formatCurrency(price)}</del>
-          <span className="text-green-900">{discountRate}% off</span>
+          <span className="text-green-900">{formatPercent(discountRate)} off</span>
         </div>
         <div className={`${isList ? "w-full" : "w-2/3"} my-3`}>
           <RatingStars rating={starRating} />

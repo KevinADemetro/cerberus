@@ -1,7 +1,14 @@
 "use server";
-import prisma from "../lib/prisma";
-import { ProductWithVariantAndImage } from "./productVariant.types";
-import { ProductVariantFilters } from "./productVariantFilters.schema";
+import prisma from "@/src/lib/prisma";
+import { ProductWithVariantAndImage } from "./product.types";
+import { ProductVariantFilters } from "./product.schemas";
+
+export async function getImageByColorIdAndProductId(colorId: number, productId: number) {
+  const image = await prisma.productColorImage.findFirstOrThrow({
+    where: { colorId, productId },
+  });
+  return image;
+}
 
 export async function getProductVariantBy(id: number) {
   const variant = await prisma.productVariant.findUnique({
