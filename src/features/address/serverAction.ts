@@ -1,9 +1,9 @@
 "use server";
 
 import { cookies } from "next/headers";
-import prisma from "../lib/prisma";
-import { type Address as ZodAddress } from "../utils/address.schema";
-import type { Address as PrismaAddress } from "../../generated/prisma";
+import prisma from "@/src/lib/prisma";
+import { type Address as ZodAddress } from "./address.schema";
+import type { Address as PrismaAddress } from "@/generated/prisma";
 
 export async function createAddress(address: ZodAddress) {
   const cookieStore = await cookies();

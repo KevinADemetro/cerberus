@@ -1,10 +1,10 @@
 "use client";
-import InputField from "./InputField";
+import InputField from "../../../components/InputField";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Address, addressSchema } from "../utils/address.schema";
+import { Address, addressSchema } from "../address.schema";
 import { useHookFormMask } from "use-mask-input";
-import { createAddress, getAddress } from "../utils/address";
+import { createAddress, getAddress } from "../serverAction";
 import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
 

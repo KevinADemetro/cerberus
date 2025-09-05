@@ -1,10 +1,10 @@
 "use client";
-import InputField from "./InputField";
+import InputField from "../../../components/InputField";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { User, userSchema } from "../utils/user.schema";
+import { User, userSchema } from "../user.schema";
 import { useHookFormMask } from "use-mask-input";
-import { createGuestUser, getUser } from "../utils/user";
+import { createGuestUser, getUser } from "../serverActions";
 import { useEffect, useState } from "react";
 
 function PersonalDataForm({ onSubmitSuccess }: { onSubmitSuccess: () => void }) {

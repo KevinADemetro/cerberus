@@ -1,9 +1,9 @@
 "use server";
 import { Preference } from "mercadopago";
-import mercadoPagoClient from "../lib/mercadoPago";
+import mercadoPagoClient from "../../lib/mercadoPago";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-import prisma from "../lib/prisma";
+import prisma from "../../lib/prisma";
 import { Items } from "mercadopago/dist/clients/commonTypes";
 
 export async function createOrder() {

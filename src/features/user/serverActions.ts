@@ -1,9 +1,9 @@
 "use server";
 
 import { cookies } from "next/headers";
-import prisma from "../lib/prisma";
-import { type User as ZodUser } from "../utils/user.schema";
-import type { User as PrismaUser } from "../../generated/prisma";
+import prisma from "@/src/lib/prisma";
+import { type User as ZodUser } from "./user.schema";
+import type { User as PrismaUser } from "@/generated/prisma";
 
 export async function createGuestUser(guestUser: ZodUser) {
   const cookieStore = await cookies();

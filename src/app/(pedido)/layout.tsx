@@ -1,5 +1,6 @@
-import OrderSteps from "@/src/components/OrderSteps";
+import OrderSteps from "@/src/features/order/components/OrderSteps";
 import Link from "next/link";
+
 function PedidoLayout({ children }: { children: React.ReactNode }) {
   return (
     <>

@@ -1,12 +1,11 @@
-import CheckoutForm from "@/src/components/CheckoutForm";
-import { cookies } from "next/headers";
+import OrderForm from "@/src/features/order/components/OrderForm";
 
 async function Page() {
   return (
     <div>
       <div className="p-5">
         <h2 className="mb-5">Continuar sem uma conta</h2>
-        <CheckoutForm />
+        <OrderForm />
       </div>
     </div>
   );
