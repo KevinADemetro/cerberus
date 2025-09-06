@@ -3,6 +3,7 @@ import StepForward from "@/src/components/StepForward";
 import { calculateTotal } from "@/src/core/pricing/utils";
 import { getCartItems } from "@/src/features/cart/serverActions";
 import PricingSummary from "@/src/core/pricing/components/PricingSummary";
+import ShippingTime from "@/src/core/shipping/components/ShippingTime";
 
 async function Page() {
   const cartItems = await getCartItems();
@@ -12,6 +13,7 @@ async function Page() {
       {cartItems.length ? (
         <>
           <CartItemsList cartItems={cartItems} />
+          <ShippingTime />
           <PricingSummary totals={totals} />
           <StepForward href="/checkout" />
         </>

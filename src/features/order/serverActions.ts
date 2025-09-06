@@ -1,26 +1,14 @@
 "use server";
-import { Preference } from "mercadopago";
-import mercadoPagoClient from "../../lib/mercadoPago";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import prisma from "../../lib/prisma";
 import { Items } from "mercadopago/dist/clients/commonTypes";
+import { createPayment } from "@/src/core/payment/api/mercadoPago";
 
 export async function createOrder() {
-  const preference = new Preference(mercadoPagoClient);
-
-  const response = await preference.create({
-    body: {
-      items: await getItems(),
-      back_urls: {
-        success: "http://localhost:3000/",
-        failure: "http://localhost:3000/checkout/pagamento",
-        pending: "http://localhost:3000/checkout",
-      },
-    },
-  });
-  console.log(response);
-  redirect(response.init_point ?? "");
+  const items = await getItems();
+  const redirectUrl = await createPayment(items);
+  redirect(redirectUrl);
 }
 
 async function getItems() {
