@@ -1,6 +1,6 @@
 import RatingStars from "@/src/components/RatingStars";
 import { formatCurrency, formatPercent } from "@/src/utils/formatter";
-import { getDiscountedPrice } from "@/src/core/pricing/pricing";
+import { getDiscountedPrice } from "@/src/core/pricing/utils";
 import { ProductWithVariantAndImage } from "../product.types";
 import ProductImage from "./ProductImage";
 

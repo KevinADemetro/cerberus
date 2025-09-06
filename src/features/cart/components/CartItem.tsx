@@ -21,13 +21,13 @@ async function CartItem({ cartItem }: { cartItem: CartItemWithProduct }) {
     <li className="p-5">
       <div className="flex justify-between">
         <Link href={link}>
-          <h3 className="mb-5 text-sm">{name}</h3>
+          <h4 className="mb-5 text-sm">{name}</h4>
         </Link>
         <RemoveCartItemButton cartItemId={cartItemId} />
       </div>
-      <p className="text-xs">Quantidade: {quantity}</p>
-      <p className="text-xs">Cor: {colorName}</p>
-      <p className="text-xs">Tamanho: {size}</p>
+      <p>Quantidade: {quantity}</p>
+      <p>Cor: {colorName}</p>
+      <p>Tamanho: {size}</p>
       <ProductImage imagePath={image.imagePath} link={link} className="my-5" />
       <div className="flex justify-between items-center">
         <FormAddQuantity quantity={quantity} cartItemId={cartItemId} />

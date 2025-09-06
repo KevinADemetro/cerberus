@@ -54,7 +54,7 @@ function InputField<T extends FieldValues>({
         />
       )}
 
-      {error && <p className="text-red-400 text-sm mt-2">{error.message}</p>}
+      {error && <p className="text-red-400 mt-2">{error.message}</p>}
     </div>
   );
 }

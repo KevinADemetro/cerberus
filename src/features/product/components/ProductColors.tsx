@@ -4,7 +4,7 @@ import Image from "next/image";
 function ProductColors({ colorImages }: { colorImages: ProductColorImage[] }) {
   return (
     <div>
-      <h3 className="ml-5 my-5">Cores</h3>
+      <h3 className="ml-5">Cores</h3>
       <div className="flex mx-1 gap-1 overflow-x-scroll">
         {colorImages.map((colorImage: ProductColorImage) => (
           <Link

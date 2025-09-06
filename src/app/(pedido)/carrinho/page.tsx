@@ -1,6 +1,6 @@
 import CartItemsList from "@/src/features/cart/components/CartItemsList";
 import StepForward from "@/src/components/StepForward";
-import { calculateTotal } from "@/src/core/pricing/pricing";
+import { calculateTotal } from "@/src/core/pricing/utils";
 import { getCartItems } from "@/src/features/cart/serverActions";
 import PricingSummary from "@/src/core/pricing/components/PricingSummary";
 

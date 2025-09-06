@@ -5,7 +5,7 @@ function PricingSummary({ totals }: { totals: PricingTotals }) {
   const { subtotal, shipping, total } = totals;
   return (
     <div className="mt-10 p-5">
-      <h3>Resumo</h3>
+      <h2>Resumo</h2>
       <dl className="text-sm flex flex-col gap-5 mt-5">
         <div className="flex justify-between py-2 ">
           <dt>Valor dos produtos</dt>

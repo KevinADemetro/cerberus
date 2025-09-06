@@ -19,7 +19,7 @@ function ProductSizes({
 
   return (
     <div className="p-5">
-      <h3 className="my-5">Tamanhos e numeração</h3>
+      <h3>Tamanhos e numeração</h3>
       <div className="grid grid-cols-4 gap-1">
         {sizes.map((variantSize) => (
           <label
