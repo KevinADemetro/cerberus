@@ -75,3 +75,22 @@ export async function getProductsVariantsWithImage(filter: ProductVariantFilters
 
   return products;
 }
+
+export async function getProductBy(slug: string, colorId: number) {
+  const product = await prisma.product.findUnique({
+    include: {
+      category: true,
+      variants: {
+        where: {
+          color: {
+            id: colorId,
+          },
+        },
+        orderBy: { id: "desc" },
+      },
+      productColorImages: { where: { colorId } },
+    },
+    where: { slug },
+  });
+  return product;
+}

@@ -1,4 +1,10 @@
-import { ProductCard, ProductColors, ProductDescription } from "@/src/features/product/";
+import {
+  convertProductFullToProductWithVariantAndImage,
+  getProductBy,
+  ProductCard,
+  ProductColors,
+  ProductDescription,
+} from "@/src/features/product/";
 import prisma from "@/src/lib/prisma";
 import { notFound } from "next/navigation";
 import Image from "next/image";
@@ -18,22 +24,12 @@ async function page({
     notFound();
   }
 
-  const product = await prisma.product.findUnique({
-    include: {
-      category: true,
-      variants: {
-        where: {
-          color: {
-            id: colorId,
-          },
-        },
-        orderBy: { id: "desc" },
-      },
-      productColorImages: { where: { colorId } },
-    },
-    where: { slug },
-  });
-
+  const product = await getProductBy(slug, colorId);
+  if (product === null) {
+    notFound();
+  }
+  const productWithVariantAndImage =
+    convertProductFullToProductWithVariantAndImage(product);
   if (!product) {
     notFound();
   }
@@ -46,7 +42,7 @@ async function page({
   return (
     <>
       <div className="px-5">
-        <ProductCard product={product} variant="page" />
+        <ProductCard product={productWithVariantAndImage} variant="page" />
       </div>
       <div className="relative aspect-square w-full">
         <Image

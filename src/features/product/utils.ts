@@ -1,6 +1,7 @@
 import {
   productVariantFiltersSchema,
   ProductVariantFilters,
+  ProductFull,
 } from "@/src/features/product";
 
 export function parseProductVariantFilters(
@@ -13,4 +14,19 @@ export function parseProductVariantFilters(
   }
 
   return parsed.data;
+}
+
+export function convertProductFullToProductWithVariantAndImage(product: ProductFull) {
+  return {
+    productId: product.id,
+    colorId: product.productColorImages[0].colorId,
+    price: product.price,
+    discountRate: product.discountRate,
+    starRating: product.starRating,
+    imagePath: product.productColorImages[0].imagePath,
+    categoryId: product.category.id,
+    categoryName: product.category.title,
+    slug: product.slug,
+    name: product.name,
+  };
 }
