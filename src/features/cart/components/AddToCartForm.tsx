@@ -1,13 +1,14 @@
 "use client";
 import { useRef, useState } from "react";
-
-import { handleAddToCart, AddedToCartModal } from "@/src/features/cart/";
-import { getProductVariantBy, ProductSizes } from "@/src/features/product";
-import { StickyBottom } from "@/src/components/";
+import { getProductVariantBy } from "@/src/features/product/serverAction";
+import { handleAddToCart } from "@/src/features/cart/serverActions";
+import { AddedToCartModal } from "@/src/features/cart/components/AddedToCartModal";
+import { ProductSizes } from "@/src/features/product/components/ProductSizes";
 import {
   ProductFull,
   ProductVariantWithCategory,
 } from "@/src/features/product/product.types";
+import { StickyBottom } from "@/src/components/StickyBottom";
 
 export function AddToCartForm({ product }: { product: ProductFull }) {
   const [showSizeError, setShowSizeError] = useState(false);

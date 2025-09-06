@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import prisma from "../../lib/prisma";
 import { Items } from "mercadopago/dist/clients/commonTypes";
-import { createPayment } from "@/src/core/payment";
+import { createPayment } from "@/src/core/payment/api/mercadoPago";
 
 export async function createOrder() {
   const items = await getItems();

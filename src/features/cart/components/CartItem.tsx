@@ -1,12 +1,11 @@
 import Link from "next/link";
-import {
-  FormAddQuantity,
-  CartItemWithProduct,
-  RemoveCartItemButton,
-} from "@/src/features/cart/";
 import { formatCurrency } from "@/src/utils/formatter";
-import { getImageByColorIdAndProductId, ProductImage } from "@/src/features/product/";
 import prisma from "@/src/lib/prisma";
+import { CartItemWithProduct } from "../CartItem.types";
+import { getImageByColorIdAndProductId } from "@/src/features/product/serverAction";
+import { RemoveCartItemButton } from "./RemoveCartItemButton";
+import { ProductImage } from "@/src/features/product/components/ProductImage";
+import { FormAddQuantity } from "@/src/features/cart/components/FormAddQuantity";
 
 export async function CartItem({ cartItem }: { cartItem: CartItemWithProduct }) {
   const { productVariant, quantity, id: cartItemId } = cartItem;

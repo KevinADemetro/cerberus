@@ -1,5 +1,5 @@
 import { formatCurrency } from "@/src/utils/formatter";
-import { PricingTotals } from "@/src/core/pricing/";
+import { PricingTotals } from "@/src/core/pricing/pricingTotals.type";
 
 export function PricingSummary({ totals }: { totals: PricingTotals }) {
   const { subtotal, shipping, total } = totals;

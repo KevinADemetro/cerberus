@@ -1,7 +1,7 @@
 "use client";
 import { usePathname } from "next/navigation";
-import { OrderStep } from "@/src/features/order";
 import Link from "next/link";
+import { OrderStep } from "@/src/features/order/components/OrderStep";
 
 export function OrderSteps() {
   const pathname = usePathname();

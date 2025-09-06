@@ -1,6 +1,6 @@
 import { ShoppingBagIcon, Bars3Icon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { SearchWithFilters } from "@/src/components";
+import { SearchWithFilters } from "@/src/components/SearchWithFilters";
 
 export function Header() {
   return (

@@ -1,7 +1,9 @@
-import { StepForward } from "@/src/components/";
-import { calculateTotal, PricingSummary } from "@/src/core/pricing/";
-import { getCartItems, CartItemsList } from "@/src/features/cart/";
-import { ShippingTime } from "@/src/core/shipping/";
+import { StepForward } from "@/src/components/StepForward";
+import { PricingSummary } from "@/src/core/pricing/components/PricingSummary";
+import { calculateTotal } from "@/src/core/pricing/utils";
+import { ShippingTime } from "@/src/core/shipping/components/ShippingTime";
+import { CartItemsList } from "@/src/features/cart/components/CartItemsList";
+import { getCartItems } from "@/src/features/cart/serverActions";
 
 async function Page() {
   const cartItems = await getCartItems();

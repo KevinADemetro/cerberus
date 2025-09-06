@@ -1,7 +1,8 @@
-import { RatingStars } from "@/src/components/";
+import { RatingStars } from "@/src/components/RatingStars";
 import { formatCurrency, formatPercent } from "@/src/utils/formatter";
-import { getDiscountedPrice } from "@/src/core/pricing/";
-import { ProductWithVariantAndImage, ProductImage } from "@/src/features/product";
+import { getDiscountedPrice } from "@/src/core/pricing/utils";
+import { ProductWithVariantAndImage } from "@/src/features/product/product.types";
+import { ProductImage } from "@/src/features/product/components/ProductImage";
 
 export function ProductCard({
   product,

@@ -1,11 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useSideDrawer, SideDrawer } from "@/src/components/";
 import Link from "next/link";
 import Image from "next/image";
 import { Prisma } from "@/generated/prisma";
 import { formatCurrency } from "@/src/utils/formatter";
-import { getImageByColorIdAndProductId } from "@/src/features/product/";
+import { SideDrawer, useSideDrawer } from "@/src/components/SideDrawer";
+import { getImageByColorIdAndProductId } from "@/src/features/product/serverAction";
 
 export function AddedToCartModal({
   onClose,

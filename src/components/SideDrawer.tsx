@@ -11,7 +11,7 @@ import {
   SetStateAction,
 } from "react";
 import { useOutsideClick } from "../hooks/useOutsideClick";
-import { IconButton } from "@/src/components";
+import { IconButton } from "@/src/components/IconButton";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
 interface SideDrawerContextType {

@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { ProductWithVariantAndImage, ProductCard } from "@/src/features/product";
+import { ProductCard } from "@/src/features/product/components/ProductCard";
+import { ProductWithVariantAndImage } from "@/src/features/product/product.types";
 
 export function ProductsList({ products }: { products: ProductWithVariantAndImage[] }) {
   return (

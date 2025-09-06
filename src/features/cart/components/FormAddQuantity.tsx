@@ -1,5 +1,5 @@
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
-import { handleChangeQuantity } from "@/src/features/cart";
+import { handleChangeQuantity } from "../serverActions";
 
 export function FormAddQuantity({
   quantity,

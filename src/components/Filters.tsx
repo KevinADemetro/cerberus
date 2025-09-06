@@ -1,5 +1,5 @@
 "use client";
-import { SideDrawer } from "@/src/components/";
+import { SideDrawer } from "@/src/components/SideDrawer";
 import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/outline";
 
 export function Filters() {

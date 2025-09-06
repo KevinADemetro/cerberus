@@ -1,5 +1,5 @@
-import { CartItem, CartItemWithProduct } from "@/src/features/cart/";
-
+import { CartItemWithProduct } from "@/src/features/cart/CartItem.types";
+import { CartItem } from "@/src/features/cart/components/CartItem";
 export function CartItemsList({ cartItems }: { cartItems: CartItemWithProduct[] }) {
   return (
     <ul>

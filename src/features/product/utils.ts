@@ -1,8 +1,5 @@
-import {
-  productVariantFiltersSchema,
-  ProductVariantFilters,
-  ProductFull,
-} from "@/src/features/product";
+import { ProductVariantFilters, productVariantFiltersSchema } from "./product.schemas";
+import { ProductFull } from "./product.types";
 
 export function parseProductVariantFilters(
   raw: Record<string, string>

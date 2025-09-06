@@ -1,6 +1,6 @@
 "use client";
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { removeItem } from "@/src/features/cart";
+import { removeItem } from "../serverActions";
 
 export function RemoveCartItemButton({ cartItemId }: { cartItemId: number }) {
   return (
