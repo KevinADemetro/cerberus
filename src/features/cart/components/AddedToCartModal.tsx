@@ -1,13 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
-import SideDrawer, { useSideDrawer } from "@/src/components/SideDrawer";
+import { useSideDrawer, SideDrawer } from "@/src/components/";
 import Link from "next/link";
 import Image from "next/image";
 import { Prisma } from "@/generated/prisma";
 import { formatCurrency } from "@/src/utils/formatter";
-import { getImageByColorIdAndProductId } from "@/src/features/product/serverAction";
+import { getImageByColorIdAndProductId } from "@/src/features/product/";
 
-function AddedToCartModal({
+export function AddedToCartModal({
   onClose,
   productVariant,
 }: {
@@ -73,5 +73,3 @@ function AddedToCartModalContent({
     </SideDrawer.Window>
   );
 }
-
-export default AddedToCartModal;

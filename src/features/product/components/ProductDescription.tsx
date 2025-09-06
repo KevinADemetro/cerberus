@@ -1,4 +1,4 @@
-function ProductDescription({ description }: { description: string }) {
+export function ProductDescription({ description }: { description: string }) {
   return (
     <div className="p-5">
       <h3>Descrição</h3>
@@ -6,5 +6,3 @@ function ProductDescription({ description }: { description: string }) {
     </div>
   );
 }
-
-export default ProductDescription;

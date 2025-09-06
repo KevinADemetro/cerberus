@@ -1,5 +1,3 @@
-function ShippingTime() {
+export function ShippingTime() {
   return <div></div>;
 }
-
-export default ShippingTime;

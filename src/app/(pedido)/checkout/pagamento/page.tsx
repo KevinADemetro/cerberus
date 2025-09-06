@@ -1,4 +1,4 @@
-import { createOrder } from "@/src/features/order/serverActions";
+import { createOrder } from "@/src/features/order/";
 
 function Page() {
   return (

@@ -1,6 +1,8 @@
-import ProductsList from "@/src/features/product/components/ProductsList";
-import { getProductsVariantsWithImage } from "@/src/utils/productVariant";
-import { parseProductVariantFilters } from "@/src/utils/productVariantFilters";
+import {
+  getProductsVariantsWithImage,
+  parseProductVariantFilters,
+  ProductsList,
+} from "@/src/features/product/";
 
 async function Page({ searchParams }: { searchParams: Promise<{ term: string }> }) {
   const { term } = await searchParams;

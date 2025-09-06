@@ -1,14 +1,18 @@
 "use client";
-import InputField from "../../../components/InputField";
+import { InputField } from "@/src/components/";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Address, addressSchema } from "../address.schema";
+import {
+  Address,
+  addressSchema,
+  createAddress,
+  getAddress,
+} from "@/src/features/address";
 import { useHookFormMask } from "use-mask-input";
-import { createAddress, getAddress } from "../serverAction";
 import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
 
-export default function AddressForm() {
+export function AddressForm() {
   const {
     register,
     handleSubmit,

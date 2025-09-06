@@ -1,4 +1,4 @@
-function OrderStep({
+export function OrderStep({
   indice,
   label,
   isActive,
@@ -20,5 +20,3 @@ function OrderStep({
     </li>
   );
 }
-
-export default OrderStep;

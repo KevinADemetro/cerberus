@@ -1,4 +1,4 @@
-import OrderForm from "@/src/features/order/components/OrderForm";
+import { OrderForm } from "@/src/features/order/";
 
 async function Page() {
   return (

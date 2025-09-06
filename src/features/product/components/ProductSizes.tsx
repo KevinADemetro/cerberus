@@ -1,7 +1,7 @@
 "use client";
 import { ProductVariant } from "@/generated/prisma";
 
-function ProductSizes({
+export function ProductSizes({
   sizes,
   setShowSizeError,
   setSelected,
@@ -46,5 +46,3 @@ function ProductSizes({
     </div>
   );
 }
-
-export default ProductSizes;

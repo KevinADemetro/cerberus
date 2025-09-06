@@ -1,13 +1,14 @@
 import Link from "next/link";
-import FormAddQuantity from "@/src/features/cart/components/FormAddQuantity";
+import {
+  FormAddQuantity,
+  CartItemWithProduct,
+  RemoveCartItemButton,
+} from "@/src/features/cart/";
 import { formatCurrency } from "@/src/utils/formatter";
-import RemoveCartItemButton from "./RemoveCartItemButton";
-import { getImageByColorIdAndProductId } from "@/src/features/product/serverAction";
+import { getImageByColorIdAndProductId, ProductImage } from "@/src/features/product/";
 import prisma from "@/src/lib/prisma";
-import { CartItemWithProduct } from "../CartItem.types";
-import ProductImage from "@/src/features/product/components/ProductImage";
 
-async function CartItem({ cartItem }: { cartItem: CartItemWithProduct }) {
+export async function CartItem({ cartItem }: { cartItem: CartItemWithProduct }) {
   const { productVariant, quantity, id: cartItemId } = cartItem;
   const { product, size, colorId } = productVariant;
   const { name: colorName } = await prisma.color.findFirstOrThrow({
@@ -36,5 +37,3 @@ async function CartItem({ cartItem }: { cartItem: CartItemWithProduct }) {
     </li>
   );
 }
-
-export default CartItem;

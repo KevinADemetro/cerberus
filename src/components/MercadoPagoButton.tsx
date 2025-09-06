@@ -1,7 +1,7 @@
 "use client";
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 
-function MercadoPagoButton() {
+export function MercadoPagoButton() {
   initMercadoPago("APP_USR-553e265f-03b6-424d-b374-60181f3e7576");
 
   return (
@@ -14,5 +14,3 @@ function MercadoPagoButton() {
     </div>
   );
 }
-
-export default MercadoPagoButton;

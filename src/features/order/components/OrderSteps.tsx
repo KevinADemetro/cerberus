@@ -1,9 +1,9 @@
 "use client";
 import { usePathname } from "next/navigation";
-import OrderStep from "./OrderStep";
+import { OrderStep } from "@/src/features/order";
 import Link from "next/link";
 
-function OrderSteps() {
+export function OrderSteps() {
   const pathname = usePathname();
   const links = [
     { href: "/carrinho", label: "Carrinho" },
@@ -24,5 +24,3 @@ function OrderSteps() {
     </ol>
   );
 }
-
-export default OrderSteps;

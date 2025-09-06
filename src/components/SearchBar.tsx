@@ -1,6 +1,7 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
-function SearchBar() {
+
+export function SearchBar() {
   const router = useRouter();
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -28,5 +29,3 @@ function SearchBar() {
     </form>
   );
 }
-
-export default SearchBar;

@@ -20,7 +20,7 @@ type InputFieldProps<T extends FieldValues> = {
     | "decimal";
 };
 
-function InputField<T extends FieldValues>({
+export function InputField<T extends FieldValues>({
   label,
   field,
   placeholder,
@@ -58,5 +58,3 @@ function InputField<T extends FieldValues>({
     </div>
   );
 }
-
-export default InputField;

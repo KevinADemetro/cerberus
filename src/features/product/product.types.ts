@@ -14,7 +14,7 @@ export type ProductWithVariantAndImage = {
 };
 
 export type ProductFull = Prisma.ProductGetPayload<{
-  include: { category: true; variants: true };
+  include: { category: true; variants: true; productColorImages: true };
 }>;
 
 export type ProductVariantWithCategory = Prisma.ProductVariantGetPayload<{

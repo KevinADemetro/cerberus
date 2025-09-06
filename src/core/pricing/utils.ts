@@ -1,5 +1,5 @@
 import { Prisma } from "@/generated/prisma";
-import { PricingTotals } from "@/src/core/pricing/pricingTotals.type";
+import { PricingTotals } from "@/src/core/pricing/";
 
 function getProductsSubtotal(
   cartItems: Prisma.CartItemGetPayload<{

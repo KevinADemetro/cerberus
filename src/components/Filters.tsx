@@ -1,8 +1,8 @@
 "use client";
-import SideDrawer from "@/src/components/SideDrawer";
+import { SideDrawer } from "@/src/components/";
 import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/outline";
 
-function Filters() {
+export function Filters() {
   return (
     <SideDrawer>
       <SideDrawer.Open name="filtros">
@@ -20,5 +20,3 @@ function Filters() {
     </SideDrawer>
   );
 }
-
-export default Filters;

@@ -4,7 +4,7 @@ import StarHalf from "@/src/icons/star-half.svg";
 import Image from "next/image";
 import { formatOneDecimal } from "../utils/formatter";
 
-function RatingStars({ rating }: { rating: number }) {
+export function RatingStars({ rating }: { rating: number }) {
   const stars = [];
 
   for (let i = 0; i < 5; i++) {
@@ -28,5 +28,3 @@ function RatingStars({ rating }: { rating: number }) {
     </div>
   );
 }
-
-export default RatingStars;

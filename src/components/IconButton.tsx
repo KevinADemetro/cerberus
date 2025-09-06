@@ -1,4 +1,4 @@
-function IconButton({
+export function IconButton({
   children,
   onClick,
 }: Readonly<{
@@ -7,5 +7,3 @@ function IconButton({
 }>) {
   return <button onClick={onClick}>{children}</button>;
 }
-
-export default IconButton;

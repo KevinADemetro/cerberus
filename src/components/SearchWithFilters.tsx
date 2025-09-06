@@ -1,9 +1,8 @@
 "use client";
 import { usePathname } from "next/navigation";
-import Filters from "./Filters";
-import SearchBar from "../components/SearchBar";
+import { Filters, SearchBar } from "@/src/components/";
 
-function SearchWithFilters() {
+export function SearchWithFilters() {
   const pathname = usePathname();
   const showFilterButton = pathname?.startsWith("/nav");
   return (
@@ -13,5 +12,3 @@ function SearchWithFilters() {
     </div>
   );
 }
-
-export default SearchWithFilters;

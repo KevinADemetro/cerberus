@@ -1,7 +1,7 @@
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
-import { handleChangeQuantity } from "../serverActions";
+import { handleChangeQuantity } from "@/src/features/cart";
 
-function FormAddQuantity({
+export function FormAddQuantity({
   quantity,
   cartItemId,
 }: {
@@ -32,5 +32,3 @@ function FormAddQuantity({
     </form>
   );
 }
-
-export default FormAddQuantity;

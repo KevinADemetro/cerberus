@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-function StepForward({ href }: { href: string }) {
+export function StepForward({ href }: { href: string }) {
   return (
     <div className="flex justify-center items-center p-5">
       <Link
@@ -12,5 +12,3 @@ function StepForward({ href }: { href: string }) {
     </div>
   );
 }
-
-export default StepForward;

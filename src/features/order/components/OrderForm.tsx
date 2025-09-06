@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import PersonalDataForm from "../../user/components/PersonalDataForm";
-import AddressForm from "../../address/components/AddressForm";
+import { PersonalDataForm } from "@/src/features/user";
+import { AddressForm } from "@/src/features/address";
 
-function OrderForm() {
+export function OrderForm() {
   const [showCepField, setShowCepField] = useState(false);
   return (
     <>
@@ -13,5 +13,3 @@ function OrderForm() {
     </>
   );
 }
-
-export default OrderForm;

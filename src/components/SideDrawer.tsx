@@ -11,7 +11,7 @@ import {
   SetStateAction,
 } from "react";
 import { useOutsideClick } from "../hooks/useOutsideClick";
-import IconButton from "./IconButton";
+import { IconButton } from "@/src/components";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
 interface SideDrawerContextType {
@@ -103,7 +103,7 @@ SideDrawer.Open = Open;
 SideDrawer.Window = Window;
 SideDrawer.Close = Close;
 
-export default SideDrawer;
+export { SideDrawer };
 
 export function useSideDrawer() {
   const context = useContext(SideDrawerContext);

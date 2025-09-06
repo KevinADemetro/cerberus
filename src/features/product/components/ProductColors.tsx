@@ -1,7 +1,7 @@
 import { ProductColorImage } from "@/generated/prisma";
 import Link from "next/link";
 import Image from "next/image";
-function ProductColors({ colorImages }: { colorImages: ProductColorImage[] }) {
+export function ProductColors({ colorImages }: { colorImages: ProductColorImage[] }) {
   return (
     <div>
       <h3 className="ml-5">Cores</h3>
@@ -19,5 +19,3 @@ function ProductColors({ colorImages }: { colorImages: ProductColorImage[] }) {
     </div>
   );
 }
-
-export default ProductColors;

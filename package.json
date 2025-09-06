@@ -11,7 +11,8 @@
     "migrate": "npx prisma migrate dev --name init",
     "generate": "npx prisma generate",
     "seed": "npx prisma db seed",
-    "dbeaver": "npx prisma studio"
+    "dbeaver": "npx prisma studio",
+    "generate-barrels": "barrelsby  --directory src/features/* --directory src/core/* --directory src/components/ --delete --location top --quote single --exportType named"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
@@ -36,6 +37,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "barrelsby": "^2.8.1",
     "eslint": "^9",
     "eslint-config-next": "15.4.1",
     "prisma": "^6.13.0",

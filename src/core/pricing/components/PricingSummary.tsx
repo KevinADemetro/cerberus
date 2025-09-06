@@ -1,7 +1,7 @@
 import { formatCurrency } from "@/src/utils/formatter";
-import { PricingTotals } from "@/src/core/pricing/pricingTotals.type";
+import { PricingTotals } from "@/src/core/pricing/";
 
-function PricingSummary({ totals }: { totals: PricingTotals }) {
+export function PricingSummary({ totals }: { totals: PricingTotals }) {
   const { subtotal, shipping, total } = totals;
   return (
     <div className="mt-10 p-5">
@@ -23,5 +23,3 @@ function PricingSummary({ totals }: { totals: PricingTotals }) {
     </div>
   );
 }
-
-export default PricingSummary;

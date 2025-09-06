@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-function ProductImage({
+export function ProductImage({
   imagePath,
   link,
   className,
@@ -22,5 +22,3 @@ function ProductImage({
     </div>
   );
 }
-
-export default ProductImage;

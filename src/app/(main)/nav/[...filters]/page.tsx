@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
-import ProductsList from "@/src/features/product/components/ProductsList";
-import { getProductsVariantsWithImage } from "@/src/features/product/serverAction";
-import { parseProductVariantFilters } from "@/src/features/product/utils";
+import {
+  parseProductVariantFilters,
+  ProductsList,
+  getProductsVariantsWithImage,
+} from "@/src/features/product/";
 
 async function Page({
   params,

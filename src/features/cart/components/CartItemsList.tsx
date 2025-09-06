@@ -1,7 +1,6 @@
-import CartItem from "@/src/features/cart/components/CartItem";
-import { CartItemWithProduct } from "../CartItem.types";
+import { CartItem, CartItemWithProduct } from "@/src/features/cart/";
 
-function CartItemsList({ cartItems }: { cartItems: CartItemWithProduct[] }) {
+export function CartItemsList({ cartItems }: { cartItems: CartItemWithProduct[] }) {
   return (
     <ul>
       {cartItems.map((item) => (
@@ -10,5 +9,3 @@ function CartItemsList({ cartItems }: { cartItems: CartItemWithProduct[] }) {
     </ul>
   );
 }
-
-export default CartItemsList;

@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 import prisma from "@/src/lib/prisma";
-import { type Address as ZodAddress } from "./address.schema";
+import { type Address as ZodAddress } from "@/src/features/address";
 import type { Address as PrismaAddress } from "@/generated/prisma";
 
 export async function createAddress(address: ZodAddress) {

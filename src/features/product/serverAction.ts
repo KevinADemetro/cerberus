@@ -1,7 +1,10 @@
 "use server";
 import prisma from "@/src/lib/prisma";
-import { ProductWithVariantAndImage } from "./product.types";
-import { ProductVariantFilters } from "./product.schemas";
+import { Prisma } from "@/generated/prisma";
+import {
+  ProductVariantFilters,
+  ProductWithVariantAndImage,
+} from "@/src/features/product";
 
 export async function getImageByColorIdAndProductId(colorId: number, productId: number) {
   const image = await prisma.productColorImage.findFirstOrThrow({
@@ -45,8 +48,8 @@ export async function getProductsVariantsWithImage(filter: ProductVariantFilters
 
   const where = whereClauses.length > 0 ? `WHERE ${whereClauses.join(" AND ")}` : "";
 
-  const products = await prisma.$queryRawUnsafe<ProductWithVariantAndImage[]>(
-    `
+  const products = await prisma.$queryRaw<ProductWithVariantAndImage[]>(
+    Prisma.sql`
   SELECT
     p.slug AS "slug",
     p.price,

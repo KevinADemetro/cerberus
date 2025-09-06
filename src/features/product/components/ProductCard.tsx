@@ -1,10 +1,9 @@
-import RatingStars from "@/src/components/RatingStars";
+import { RatingStars } from "@/src/components/";
 import { formatCurrency, formatPercent } from "@/src/utils/formatter";
-import { getDiscountedPrice } from "@/src/core/pricing/utils";
-import { ProductWithVariantAndImage } from "../product.types";
-import ProductImage from "./ProductImage";
+import { getDiscountedPrice } from "@/src/core/pricing/";
+import { ProductWithVariantAndImage, ProductImage } from "@/src/features/product";
 
-function ProductCard({
+export function ProductCard({
   product,
   variant = "list",
 }: {
@@ -34,5 +33,3 @@ function ProductCard({
     </div>
   );
 }
-
-export default ProductCard;
