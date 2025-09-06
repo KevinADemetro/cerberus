@@ -1,6 +1,5 @@
 "use server";
 import prisma from "@/src/lib/prisma";
-import { Prisma } from "@/generated/prisma";
 import { ProductWithVariantAndImage } from "@/src/features/product/product.types";
 import { ProductVariantFilters } from "@/src/features/product/product.schemas";
 

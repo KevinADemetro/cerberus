@@ -14,3 +14,11 @@ export const addressSchema = z
   .strict();
 
 export type Address = z.infer<typeof addressSchema>;
+
+export const cepSchema = z
+  .object({
+    cep: z.string().regex(/^\d{5}-\d{3}$/, "CEP inválido"),
+  })
+  .strict();
+
+export type Cep = z.infer<typeof cepSchema>;
