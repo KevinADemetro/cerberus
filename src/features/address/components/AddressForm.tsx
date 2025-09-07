@@ -1,12 +1,12 @@
 "use client";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useHookFormMask } from "use-mask-input";
 import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
 import { Address, addressSchema } from "../address.schema";
 import { createAddress, getAddress } from "../serverAction";
 import { InputField } from "@/src/components/InputField";
+import { CepField } from "./CepField";
 
 export function AddressForm() {
   const {
@@ -16,10 +16,8 @@ export function AddressForm() {
     setError,
     reset,
     setValue,
-    getValues,
   } = useForm<Address>({ resolver: zodResolver(addressSchema) });
 
-  const registerWithMask = useHookFormMask(register);
   const [step, setStep] = useState<"cep" | "full">("cep");
   const [guestAddress, setGuestAddress] = useState<Address | null>(null);
 
@@ -42,6 +40,7 @@ export function AddressForm() {
       const data = await response.json();
       if (data.erro) throw new Error("CEP não encontrado");
 
+      setValue("cep", data.cep ?? "");
       setValue("street", data.logradouro ?? "");
       setValue("neighborhood", data.bairro ?? "");
       setValue("city", data.localidade ?? "");
@@ -52,12 +51,12 @@ export function AddressForm() {
     }
   }
 
-  const handleCepSubmit = async () => {
-    const cep = getValues("cep");
+  const handleCepSubmit = async (cep: string) => {
     await fetchAddressByCep(cep);
   };
 
-  const handleFullSubmit: SubmitHandler<Address> = async (data) => {
+  const submit: SubmitHandler<Address> = async (data) => {
+    localStorage.removeItem("cep");
     if (!guestAddress) {
       const error = await createAddress(data);
       if (error?.field && error.message) {
@@ -76,29 +75,21 @@ export function AddressForm() {
   return (
     <>
       <h2 className="my-5 text-base">Endereço de entrega</h2>
-      <form
-        className="flex flex-col gap-3 text-sm"
-        onSubmit={handleSubmit(handleFullSubmit)}
-      >
-        <InputField<Address>
-          placeholder="00000-000"
-          label="CEP"
-          field="cep"
-          registerWithMask={registerWithMask}
-          mask="99999-999"
-          error={errors.cep}
-        />
-
-        <button
-          className="bg-black text-white w-full text-center py-3 rounded-full cursor-pointer"
-          type="button"
-          onClick={handleCepSubmit}
-        >
-          {step === "cep" ? "Continuar" : "Alterar CEP"}
-        </button>
+      <div className="flex flex-col gap-3 text-sm">
+        <>
+          <CepField
+            type={step === "cep" ? "form" : "actionField"}
+            customAction={handleCepSubmit}
+          >
+            <button className="bg-black text-white w-full text-center py-3 rounded-full cursor-pointer">
+              Continuar
+            </button>
+          </CepField>
+        </>
 
         {step === "full" && (
-          <>
+          <form onSubmit={handleSubmit(submit)} className="flex flex-col gap-3">
+            <input type="hidden" {...register("cep")} />
             <InputField<Address>
               placeholder="Nome completo do destinatário"
               label="Nome do destinatário"
@@ -151,9 +142,9 @@ export function AddressForm() {
             <button className="bg-black text-white w-full text-center py-3 rounded-full cursor-pointer">
               Continuar
             </button>
-          </>
+          </form>
         )}
-      </form>
+      </div>
     </>
   );
 }

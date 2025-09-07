@@ -12,7 +12,6 @@ export async function createAddress(address: ZodAddress) {
   if (!userUuid) {
     return { field: "general", message: "Usuário não encontrado no cookie" };
   }
-
   try {
     await prisma.address.create({
       data: {
