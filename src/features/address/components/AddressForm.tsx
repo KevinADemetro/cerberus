@@ -7,6 +7,7 @@ import { Address, addressSchema } from "../address.schema";
 import { createAddress, getAddress } from "../serverAction";
 import { InputField } from "@/src/components/InputField";
 import { CepField } from "./CepField";
+import { Button } from "@/src/components/Button";
 
 export function AddressForm() {
   const {
@@ -81,9 +82,7 @@ export function AddressForm() {
             type={step === "cep" ? "form" : "actionField"}
             customAction={handleCepSubmit}
           >
-            <button className="bg-black text-white w-full text-center py-3 rounded-full cursor-pointer">
-              Continuar
-            </button>
+            <Button>Continuar</Button>
           </CepField>
         </>
 
@@ -139,9 +138,7 @@ export function AddressForm() {
               register={register}
               error={errors.state}
             />
-            <button className="bg-black text-white w-full text-center py-3 rounded-full cursor-pointer">
-              Continuar
-            </button>
+            <Button>Continuar</Button>
           </form>
         )}
       </div>

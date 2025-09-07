@@ -8,6 +8,11 @@
 }
 
 @layer base {
+  h1 {
+    font-size: var(--text-xl);
+    @apply my-5;
+  }
+
   h2 {
     font-size: var(--text-xl);
   }

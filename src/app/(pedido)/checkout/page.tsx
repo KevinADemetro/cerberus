@@ -3,8 +3,8 @@ import { OrderForm } from "@/src/features/order/components/OrderForm";
 async function Page() {
   return (
     <div>
-      <div className="p-5">
-        <h2 className="mb-5">Continuar sem uma conta</h2>
+      <div>
+        <h1 className="mb-5">Continuar sem uma conta</h1>
         <OrderForm />
       </div>
     </div>

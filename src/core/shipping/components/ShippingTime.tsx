@@ -9,7 +9,7 @@ export function ShippingTime() {
   };
 
   return (
-    <div className="mt-10 p-5">
+    <div className="mt-10">
       <h2 className="mb-5">Prazo de entrega</h2>
       <CepField customAction={action} />
     </div>

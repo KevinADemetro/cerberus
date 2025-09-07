@@ -8,7 +8,7 @@ function PedidoLayout({ children }: { children: React.ReactNode }) {
         <h1>Logo</h1>
       </Link>
       <OrderSteps />
-      <div>{children}</div>
+      <div className="px-5">{children}</div>
     </>
   );
 }
