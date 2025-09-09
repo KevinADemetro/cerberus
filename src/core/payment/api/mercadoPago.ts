@@ -1,7 +1,7 @@
 "use server";
 import mercadoPagoClient from "@/src/lib/mercadoPago";
 import { Items } from "mercadopago/dist/clients/commonTypes";
-import { Preference } from "mercadopago";
+import { PaymentMethod, Preference } from "mercadopago";
 
 export async function createPayment(items: Items[]) {
   const preference = new Preference(mercadoPagoClient);
@@ -17,4 +17,14 @@ export async function createPayment(items: Items[]) {
     },
   });
   return response.init_point ?? "";
+}
+
+export async function getPaymentMethods() {
+  const paymentMethods = new PaymentMethod(mercadoPagoClient);
+  const res = await paymentMethods.get();
+  return res.map((m: any) => ({
+    id: m.id,
+    name: m.name,
+    image: m.secure_thumbnail,
+  }));
 }
