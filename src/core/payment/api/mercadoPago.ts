@@ -2,6 +2,8 @@
 import mercadoPagoClient from "@/src/lib/mercadoPago";
 import { Items } from "mercadopago/dist/clients/commonTypes";
 import { PaymentMethod, Preference } from "mercadopago";
+import fs from "fs";
+import path from "path";
 
 export async function createPayment(items: Items[]) {
   const preference = new Preference(mercadoPagoClient);
@@ -22,9 +24,19 @@ export async function createPayment(items: Items[]) {
 export async function getPaymentMethods() {
   const paymentMethods = new PaymentMethod(mercadoPagoClient);
   const res = await paymentMethods.get();
+
   return res.map((m: any) => ({
     id: m.id,
     name: m.name,
-    image: m.secure_thumbnail,
+    image: getImagePath(m.id, m.secure_thumbnail),
   }));
+}
+
+function getImagePath(imageName: string, altSrc: string) {
+  console.log(imageName);
+  const filePath = path.join(process.cwd(), "public/images/", `${imageName}.svg`);
+  if (fs.existsSync(filePath)) {
+    return `/images/${imageName}.svg`;
+  }
+  return altSrc;
 }
