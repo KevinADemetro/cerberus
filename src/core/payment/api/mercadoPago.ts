@@ -33,7 +33,6 @@ export async function getPaymentMethods() {
 }
 
 function getImagePath(imageName: string, altSrc: string) {
-  console.log(imageName);
   const filePath = path.join(process.cwd(), "public/images/", `${imageName}.svg`);
   if (fs.existsSync(filePath)) {
     return `/images/${imageName}.svg`;
