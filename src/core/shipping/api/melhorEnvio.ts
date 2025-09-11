@@ -20,7 +20,6 @@ export async function calculateShipping(cepTo: string) {
     id: envio.id,
     price: Number(envio.custom_price),
     companyName: envio.company.name,
-    deliveryMin: envio.custom_delivery_range.min,
-    deliveryMax: envio.custom_delivery_range.max,
+    deliveryTime: envio.delivery_time,
   }));
 }

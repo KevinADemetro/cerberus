@@ -11,7 +11,7 @@ export function PricingSummary({ totals }: { totals: PricingTotals }) {
       </div>
       <div className="flex justify-between py-2 ">
         <dt>Frete</dt>
-        <dd>{formatCurrency(shipping)}</dd>
+        <dd>{shipping > 0 ? formatCurrency(shipping) : "A calcular"}</dd>
       </div>
       <div className="flex justify-between py-2 ">
         <dt>Total da compra</dt>

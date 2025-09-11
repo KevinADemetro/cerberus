@@ -28,19 +28,15 @@ function calculateDiscount(
   return 0;
 }
 
-function calculateShipping(): number {
-  return 10;
-}
-
 export function calculateTotal(
   items: Prisma.CartItemGetPayload<{
     include: { productVariant: { include: { product: true } } };
   }>[],
+  shipping: number,
   coupon?: { type: "percent" | "fixed"; value: number }
 ): PricingTotals {
   const subtotal = getProductsSubtotal(items);
   const discount = calculateDiscount(subtotal, coupon);
-  const shipping = calculateShipping();
   const total = subtotal - discount + shipping;
 
   return { subtotal, discount, shipping, total };

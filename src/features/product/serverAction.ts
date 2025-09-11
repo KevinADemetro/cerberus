@@ -91,3 +91,10 @@ export async function getProductBy(slug: string, colorId: number) {
   });
   return product;
 }
+
+export async function getColorBy(colorId: number) {
+  const color = await prisma.color.findFirstOrThrow({
+    where: { id: colorId },
+  });
+  return color;
+}
