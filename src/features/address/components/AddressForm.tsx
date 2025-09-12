@@ -81,6 +81,7 @@ export function AddressForm() {
           <CepField
             type={step === "cep" ? "form" : "actionField"}
             customAction={handleCepSubmit}
+            actionLabel={step === "cep" ? "" : "Atualizar"}
           >
             <Button>Continuar</Button>
           </CepField>

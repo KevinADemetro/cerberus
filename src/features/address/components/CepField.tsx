@@ -6,6 +6,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { ActionField } from "@/src/components/ActionField";
 import { InputField } from "@/src/components/InputField";
 import { useEffect } from "react";
+import Label from "@/src/components/Label";
 
 export function CepField({
   customAction = () => {},
@@ -42,7 +43,8 @@ export function CepField({
   };
 
   return (
-    <>
+    <div className="flex flex-col">
+      <Label htmlFor="cep">CEP</Label>
       {type === "actionField" ? (
         <ActionField<Cep>
           field="cep"
@@ -67,6 +69,6 @@ export function CepField({
           {children}
         </form>
       ) : null}
-    </>
+    </div>
   );
 }

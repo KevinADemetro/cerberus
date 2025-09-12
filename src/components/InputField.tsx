@@ -1,4 +1,5 @@
 import { FieldError, FieldValues, Path, UseFormRegister } from "react-hook-form";
+import Label from "./Label";
 
 type InputFieldProps<T extends FieldValues> = {
   className?: string;
@@ -35,7 +36,7 @@ export function InputField<T extends FieldValues>({
 }: InputFieldProps<T>) {
   return (
     <div className="flex flex-col">
-      {label && <label htmlFor={field} className="text-sm mb-2">{`${label}`}</label>}
+      {label && <Label htmlFor={field}>{label}</Label>}
       {mask && registerWithMask ? (
         <input
           inputMode={inputMode}
