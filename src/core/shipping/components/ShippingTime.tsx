@@ -13,10 +13,10 @@ export function ShippingTime({
   const [deliveryOptions, setDeliveryOptions] = useState<DeliveryOption[]>([]);
 
   const action = async (cep: string) => {
-    const options = await calculateShipping(cep);
-    setDeliveryOptions(options);
+    const option = await calculateShipping(cep);
+    setDeliveryOptions([option]);
     if (onShippingCalculate) {
-      onShippingCalculate(options[0].price);
+      onShippingCalculate(option.price);
     }
   };
 

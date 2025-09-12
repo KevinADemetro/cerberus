@@ -11,10 +11,12 @@ export function CepField({
   customAction = () => {},
   type = "actionField",
   children,
+  actionLabel = "Calcular",
 }: {
   customAction?: (cep: string) => void;
   type?: "actionField" | "form";
   children?: React.ReactNode;
+  actionLabel?: string;
 }) {
   const {
     register,
@@ -45,7 +47,7 @@ export function CepField({
         <ActionField<Cep>
           field="cep"
           placeholder="00000-000"
-          buttonLabel="Calcular"
+          buttonLabel={actionLabel}
           mask="99999-999"
           error={errors.cep}
           action={action}

@@ -16,10 +16,14 @@ export async function calculateShipping(cepTo: string) {
 
   //todo erro na api
 
-  return data.map((envio: any) => ({
-    id: envio.id,
-    price: Number(envio.custom_price),
-    companyName: envio.company.name,
-    deliveryTime: envio.delivery_time,
-  }));
+  const cheapest = data.reduce((prev: any, curr: any) =>
+    Number(curr.custom_price) < Number(prev.custom_price) ? curr : prev
+  );
+
+  return {
+    id: cheapest.id,
+    price: Number(cheapest.custom_price),
+    companyName: cheapest.company.name,
+    deliveryTime: cheapest.delivery_time,
+  };
 }
