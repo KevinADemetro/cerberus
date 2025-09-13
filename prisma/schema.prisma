@@ -8,96 +8,171 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 model Category {
-  id        Int     @id @default(autoincrement())
-  title String
+  id       Int       @id @default(autoincrement()) @map("id")
+  title    String    @map("title")
   products Product[]
+
+  @@map("category")
 }
 
-model Cart {
-  id String @id @default(uuid())
-  userId Int?
-  createdAt DateTime
-  updatedAt DateTime?
-  cartItems CartItem[]
-}
-
-model CartItem {
-  id Int @id @default(autoincrement())
-  quantity Int
-  productVariantId Int
-  productVariant ProductVariant @relation(fields: [productVariantId], references: [id])
-  cartId String
-  cart Cart @relation(fields: [cartId], references: [id])
-  @@unique([productVariantId, cartId])
-}
 model Product {
-  id    Int     @id @default(autoincrement())
-  name  String
-  slug  String @unique
-  price Float
-  description String
-  starRating Float
-  discountRate Int
+  id           Int                @id @default(autoincrement()) @map("id")
+  name         String             @map("name")
+  slug         String             @unique @map("slug")
+  price        Float              @map("price")
+  description  String             @map("description")
+  starRating   Float              @map("star_rating")
+  discountRate Int                @map("discount_rate")
+  categoryId   Int                @map("category_id")
+  category     Category           @relation(fields: [categoryId], references: [id])
+  variants     ProductVariant[]
   productColorImages ProductColorImage[]
-  variants ProductVariant[]
-  categoryId Int
-  category Category @relation(fields: [categoryId], references: [id])
+
+  @@map("product")
 }
 
-model ProductVariant{
-  id Int @id @default(autoincrement())
-  size String
-  productId Int
-  stock Int
-  colorId Int
-  color Color @relation(fields: [colorId], references: [id])
-  product Product @relation(fields: [productId], references: [id])
-  CartItem CartItem[]
+model ProductVariant {
+  id        Int           @id @default(autoincrement()) @map("id")
+  size      String        @map("size")
+  productId Int           @map("product_id")
+  stock     Int           @map("stock")
+  colorId   Int           @map("color_id")
+  product   Product       @relation(fields: [productId], references: [id])
+  color     Color         @relation(fields: [colorId], references: [id])
+  cartItems CartItem[]
+
   @@unique([productId, size, colorId])
+  @@map("product_variant")
 }
+
 model Color {
-  id Int @id @default(autoincrement())
-  name String
-  productVariants ProductVariant[]
-  productColorImages ProductColorImage[]
+  id                 Int                  @id @default(autoincrement()) @map("id")
+  name               String               @map("name")
+  productVariants    ProductVariant[]
+  productColorImages ProductColorImage[]  
+
+  @@map("color")
 }
 
-model ProductColorImage{
-  id Int @id @default(autoincrement())
-  productId Int
-  product Product @relation(fields: [productId], references: [id])
-  colorId Int
-  color Color @relation(fields: [colorId], references: [id])
-  imagePath String
+model ProductColorImage {
+  id        Int     @id @default(autoincrement()) @map("id")
+  productId Int     @map("product_id")
+  colorId   Int     @map("color_id")
+  imagePath String  @map("image_path")
+  product   Product @relation(fields: [productId], references: [id])
+  color     Color   @relation(fields: [colorId], references: [id])
+
   @@unique([productId, colorId, imagePath])
+  @@map("product_color_image")
 }
 
-model User{
-  id String @id @default(uuid())
-  email String @unique
-  password String?
-  cpf String @unique
-  isGuest Boolean @default(true)
-  fullName String?
-  birthDate DateTime
-  phone String?
-  addresses  Address[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+model User {
+  id        String    @id @default(uuid()) @map("id")
+  email     String    @unique @map("email")
+  password  String?   @map("password")
+  cpf       String    @unique @map("cpf")
+  isGuest   Boolean   @default(true) @map("is_guest")
+  fullName  String?   @map("full_name")
+  birthDate DateTime  @map("birth_date")
+  phone     String?   @map("phone")
+  addresses Address[]
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+
+  @@map("user")
 }
 
 model Address {
-  id            String   @id @default(uuid())
-  user          User     @relation(fields: [userId], references: [id])
-  userId        String
-  cep           String
-  receiverName  String
-  street        String
-  number        String
-  complement    String?
-  neighborhood  String
-  city          String
-  state         String
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id           String   @id @default(uuid()) @map("id")
+  userId       String   @map("user_id")
+  user         User     @relation(fields: [userId], references: [id])
+  cep          String   @map("cep")
+  receiverName String   @map("receiver_name")
+  street       String   @map("street")
+  number       String   @map("number")
+  complement   String?  @map("complement")
+  neighborhood String   @map("neighborhood")
+  city         String   @map("city")
+  state        String   @map("state")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("address")
+}
+
+model Cart {
+  id           String            @id @default(uuid()) @map("id")
+  userId       Int?              @map("user_id")
+  createdAt    DateTime           @map("created_at")
+  updatedAt    DateTime?          @map("updated_at")
+  cartItems    CartItem[]
+  melhorEnvio  MelhorEnvioCart?
+
+  @@map("cart")
+}
+
+model CartItem {
+  id               Int            @id @default(autoincrement()) @map("id")
+  quantity         Int            @map("quantity")
+  productVariantId Int            @map("product_variant_id")
+  cartId           String         @map("cart_id")
+  productVariant   ProductVariant @relation(fields: [productVariantId], references: [id])
+  cart             Cart           @relation(fields: [cartId], references: [id])
+
+  @@unique([productVariantId, cartId])
+  @@map("cart_item")
+}
+
+model MelhorEnvioCart {
+  id String @id @default(uuid()) @map("id")
+  cartId String @unique @map("cart_id")
+  cart   Cart   @relation(fields: [cartId], references: [id])
+
+  protocol          String?    @map("protocol")
+  service_id        Int        @map("service_id")
+  agency_id         Int?       @map("agency_id")
+  contract          String?    @map("contract")
+  service_code      String?    @map("service_code")
+  quote             Float      @map("quote")
+  price             Float      @map("price")
+  coupon            String?    @map("coupon")
+  discount          Float?     @map("discount")
+  delivery_min      Int?       @map("delivery_min")
+  delivery_max      Int?       @map("delivery_max")
+  status            String     @map("status")
+  reminder          String?    @map("reminder")
+  insurance_value   Float?     @map("insurance_value")
+  weight            Float?     @map("weight")
+  width             Float?     @map("width")
+  height            Float?     @map("height")
+  length            Float?     @map("length")
+  diameter          Float?     @map("diameter")
+  format            String?    @map("format")
+  billed_weight     Float?     @map("billed_weight")
+  receipt           Boolean?   @map("receipt")
+  own_hand          Boolean?   @map("own_hand")
+  collect           Boolean?   @map("collect")
+  collect_scheduled_at DateTime? @map("collect_scheduled_at")
+  reverse           Boolean?   @map("reverse")
+  non_commercial    Boolean?   @map("non_commercial")
+  authorization_code String?    @map("authorization_code")
+  tracking          String?    @map("tracking")
+  self_tracking     String?    @map("self_tracking")
+  delivery_receipt  String?    @map("delivery_receipt")
+  additional_info   String?    @map("additional_info")
+  cte_key           String?    @map("cte_key")
+  paid_at           DateTime?  @map("paid_at")
+  generated_at      DateTime?  @map("generated_at")
+  posted_at         DateTime?  @map("posted_at")
+  delivered_at      DateTime?  @map("delivered_at")
+  canceled_at       DateTime?  @map("canceled_at")
+  suspended_at      DateTime?  @map("suspended_at")
+  expired_at        DateTime?  @map("expired_at")
+  created_at        DateTime    @map("created_at")
+  updated_at        DateTime    @map("updated_at")
+  parse_pi_at       DateTime?   @map("parse_pi_at")
+  received_at       DateTime?   @map("received_at")
+  risk              Boolean?    @map("risk")
+
+  @@map("melhor_envio_cart")
 }

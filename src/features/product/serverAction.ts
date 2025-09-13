@@ -49,24 +49,35 @@ export async function getProductsVariantsWithImage(filter: ProductVariantFilters
     `
   SELECT
     p.slug AS "slug",
-    p.price,
-    p."discountRate",
-    p."starRating",
-    pv."productId",
-    pv."colorId",
+    p.price AS "price",
+    p."discount_rate" AS "discountRate",
+    p."star_rating" AS "starRating",
+    pv."product_id" AS "productId",
+    pv."color_id" AS "colorId",
     c.id AS "categoryId",
-    MIN(pci."imagePath") AS "imagePath",
+    MIN(pci."image_path") AS "imagePath",
     c.title AS "categoryTitle"
-  FROM "ProductVariant" pv
-  JOIN "Product" p ON p.id = pv."productId"
-  JOIN "Category" c ON c.id = p."categoryId"
-  JOIN "Color" color ON color.id = pv."colorId"
-  LEFT JOIN "ProductColorImage" pci
-    ON pci."productId" = pv."productId"
-    AND pci."colorId" = pv."colorId"
+  FROM "product_variant" pv
+  JOIN "product" p 
+    ON p.id = pv."product_id"
+  JOIN "category" c 
+    ON c.id = p."category_id"
+  JOIN "color" color 
+    ON color.id = pv."color_id"
+  LEFT JOIN "product_color_image" pci
+    ON pci."product_id" = pv."product_id"
+    AND pci."color_id" = pv."color_id"
   ${where}
-  GROUP BY pv."productId", pv."colorId", c.id, c.title, p.slug, p.price, p."discountRate", p."starRating"
-  ORDER BY pv."productId"`,
+  GROUP BY 
+    pv."product_id", 
+    pv."color_id", 
+    c.id, 
+    c.title, 
+    p.slug, 
+    p.price, 
+    p."discount_rate", 
+    p."star_rating"
+  ORDER BY pv."product_id"`,
     ...values
   );
 

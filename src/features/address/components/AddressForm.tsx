@@ -8,8 +8,13 @@ import { createAddress, getAddress } from "../serverAction";
 import { InputField } from "@/src/components/InputField";
 import { CepField } from "./CepField";
 import { Button } from "@/src/components/Button";
+import { DeliveryOption } from "@/src/core/shipping/components/DeliveryOption";
+import { DeliveryOption as DeliveryOptionType } from "@/src/core/shipping/shipping.types";
+import { calculateShipping } from "@/src/core/shipping/api/melhorEnvio";
 
 export function AddressForm() {
+  const [deliveryOption, setDeliveryOption] = useState<DeliveryOptionType | null>(null);
+
   const {
     register,
     handleSubmit,
@@ -54,6 +59,7 @@ export function AddressForm() {
 
   const handleCepSubmit = async (cep: string) => {
     await fetchAddressByCep(cep);
+    setDeliveryOption(await calculateShipping(cep));
   };
 
   const submit: SubmitHandler<Address> = async (data) => {
@@ -139,6 +145,12 @@ export function AddressForm() {
               register={register}
               error={errors.state}
             />
+            {deliveryOption && (
+              <div>
+                <h2>Entrega</h2>
+                <DeliveryOption deliveryOption={deliveryOption} />
+              </div>
+            )}
             <Button>Continuar</Button>
           </form>
         )}

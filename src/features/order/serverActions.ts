@@ -16,15 +16,18 @@ async function getItems() {
   const cartUuid = await cookieStore.get("cartUuid");
   const items = await prisma.$queryRawUnsafe<Items[]>(
     `
-    SELECT 
+SELECT 
+    pv.id AS "id",
     p.name AS "title",
     ci.quantity,
-    p.price AS "unit_price",
-    pv.id AS "id"
-    FROM "CartItem" ci
-    JOIN "ProductVariant" pv ON pv.id = ci."productVariantId"
-    JOIN "Product" p ON p.id = pv."productId"
-    WHERE ci."cartId" = $1
+    p.price AS "unit_price"
+FROM "CartItem" ci
+INNER JOIN "ProductVariant" pv 
+    ON pv.id = ci."productVariantId"
+INNER JOIN "Product" p 
+    ON p.id = pv."productId"
+WHERE ci."cartId" = $1;
+
     `,
     cartUuid?.value
   );
