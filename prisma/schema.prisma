@@ -11,7 +11,8 @@ model Category {
   id       Int       @id @default(autoincrement()) @map("id")
   title    String    @map("title")
   products Product[]
-
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @default(now()) @updatedAt @map("updated_at")
   @@map("category")
 }
 
@@ -27,7 +28,8 @@ model Product {
   category     Category           @relation(fields: [categoryId], references: [id])
   variants     ProductVariant[]
   productColorImages ProductColorImage[]
-
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @default(now()) @updatedAt @map("updated_at")
   @@map("product")
 }
 
@@ -40,7 +42,8 @@ model ProductVariant {
   product   Product       @relation(fields: [productId], references: [id])
   color     Color         @relation(fields: [colorId], references: [id])
   cartItems CartItem[]
-
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @default(now()) @updatedAt @map("updated_at")
   @@unique([productId, size, colorId])
   @@map("product_variant")
 }
@@ -50,6 +53,8 @@ model Color {
   name               String               @map("name")
   productVariants    ProductVariant[]
   productColorImages ProductColorImage[]  
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @default(now()) @updatedAt @map("updated_at")
 
   @@map("color")
 }
@@ -61,7 +66,8 @@ model ProductColorImage {
   imagePath String  @map("image_path")
   product   Product @relation(fields: [productId], references: [id])
   color     Color   @relation(fields: [colorId], references: [id])
-
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @default(now()) @updatedAt @map("updated_at")
   @@unique([productId, colorId, imagePath])
   @@map("product_color_image")
 }
@@ -77,7 +83,7 @@ model User {
   phone     String?   @map("phone")
   addresses Address[]
   createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
+  updatedAt DateTime  @default(now()) @updatedAt @map("updated_at")
 
   @@map("user")
 }
@@ -95,7 +101,7 @@ model Address {
   city         String   @map("city")
   state        String   @map("state")
   createdAt    DateTime @default(now()) @map("created_at")
-  updatedAt    DateTime @updatedAt @map("updated_at")
+  updatedAt    DateTime @default(now()) @updatedAt @map("updated_at")
 
   @@map("address")
 }
@@ -103,8 +109,8 @@ model Address {
 model Cart {
   id           String            @id @default(uuid()) @map("id")
   userId       Int?              @map("user_id")
-  createdAt    DateTime           @map("created_at")
-  updatedAt    DateTime?          @map("updated_at")
+  createdAt    DateTime          @default(now()) @map("created_at")
+  updatedAt    DateTime?         @default(now()) @map("updated_at")
   cartItems    CartItem[]
   melhorEnvio  MelhorEnvioCart?
 
@@ -118,7 +124,8 @@ model CartItem {
   cartId           String         @map("cart_id")
   productVariant   ProductVariant @relation(fields: [productVariantId], references: [id])
   cart             Cart           @relation(fields: [cartId], references: [id])
-
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @default(now()) @updatedAt @map("updated_at")
   @@unique([productVariantId, cartId])
   @@map("cart_item")
 }
@@ -173,6 +180,5 @@ model MelhorEnvioCart {
   parse_pi_at       DateTime?   @map("parse_pi_at")
   received_at       DateTime?   @map("received_at")
   risk              Boolean?    @map("risk")
-
   @@map("melhor_envio_cart")
 }

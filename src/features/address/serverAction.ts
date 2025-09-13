@@ -35,6 +35,37 @@ export async function createAddress(address: ZodAddress) {
   }
 }
 
+export async function updateGuestAddress(address: ZodAddress) {
+  const cookieStore = await cookies();
+  const userUuid = cookieStore.get("userUuid");
+
+  if (!userUuid) {
+    return { field: "general", message: "Usuário não encontrado no cookie" };
+  }
+
+  try {
+    await prisma.address.updateMany({
+      where: { userId: userUuid.value },
+      data: {
+        cep: address.cep,
+        receiverName: address.receiverName,
+        street: address.street,
+        number: address.number,
+        complement: address.complement,
+        neighborhood: address.neighborhood,
+        city: address.city,
+        state: address.state,
+      },
+    });
+  } catch (err: any) {
+    if (err.code === "P2002") {
+      const target = err.meta?.target?.[0];
+      return { field: target ?? "general", message: "Endereço duplicado" };
+    }
+    return { field: "general", message: "Erro inesperado" };
+  }
+}
+
 export async function getAddress() {
   const cookieStore = await cookies();
   const userUuid = cookieStore.get("userUuid");

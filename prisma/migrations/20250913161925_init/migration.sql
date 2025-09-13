@@ -2,6 +2,8 @@
 CREATE TABLE "public"."category" (
     "id" SERIAL NOT NULL,
     "title" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "category_pkey" PRIMARY KEY ("id")
 );
@@ -16,6 +18,8 @@ CREATE TABLE "public"."product" (
     "star_rating" DOUBLE PRECISION NOT NULL,
     "discount_rate" INTEGER NOT NULL,
     "category_id" INTEGER NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "product_pkey" PRIMARY KEY ("id")
 );
@@ -27,6 +31,8 @@ CREATE TABLE "public"."product_variant" (
     "product_id" INTEGER NOT NULL,
     "stock" INTEGER NOT NULL,
     "color_id" INTEGER NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "product_variant_pkey" PRIMARY KEY ("id")
 );
@@ -35,6 +41,8 @@ CREATE TABLE "public"."product_variant" (
 CREATE TABLE "public"."color" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "color_pkey" PRIMARY KEY ("id")
 );
@@ -45,6 +53,8 @@ CREATE TABLE "public"."product_color_image" (
     "product_id" INTEGER NOT NULL,
     "color_id" INTEGER NOT NULL,
     "image_path" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "product_color_image_pkey" PRIMARY KEY ("id")
 );
@@ -60,7 +70,7 @@ CREATE TABLE "public"."user" (
     "birth_date" TIMESTAMP(3) NOT NULL,
     "phone" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP(3) NOT NULL,
+    "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "user_pkey" PRIMARY KEY ("id")
 );
@@ -78,7 +88,7 @@ CREATE TABLE "public"."address" (
     "city" TEXT NOT NULL,
     "state" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP(3) NOT NULL,
+    "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "address_pkey" PRIMARY KEY ("id")
 );
@@ -87,8 +97,8 @@ CREATE TABLE "public"."address" (
 CREATE TABLE "public"."cart" (
     "id" TEXT NOT NULL,
     "user_id" INTEGER,
-    "created_at" TIMESTAMP(3) NOT NULL,
-    "updated_at" TIMESTAMP(3),
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "cart_pkey" PRIMARY KEY ("id")
 );
@@ -99,6 +109,8 @@ CREATE TABLE "public"."cart_item" (
     "quantity" INTEGER NOT NULL,
     "product_variant_id" INTEGER NOT NULL,
     "cart_id" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "cart_item_pkey" PRIMARY KEY ("id")
 );

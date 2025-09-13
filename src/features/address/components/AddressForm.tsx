@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
 import { Address, addressSchema } from "../address.schema";
-import { createAddress, getAddress } from "../serverAction";
+import { createAddress, getAddress, updateGuestAddress } from "../serverAction";
 import { InputField } from "@/src/components/InputField";
 import { CepField } from "./CepField";
 import { Button } from "@/src/components/Button";
@@ -31,6 +31,7 @@ export function AddressForm() {
     async function fetchAddress() {
       const addressData = await getAddress();
       if (addressData) {
+        localStorage.setItem("cep", addressData.cep);
         reset(addressData);
         setStep("full");
         setGuestAddress(addressData);
@@ -64,19 +65,19 @@ export function AddressForm() {
 
   const submit: SubmitHandler<Address> = async (data) => {
     localStorage.removeItem("cep");
-    if (!guestAddress) {
-      const error = await createAddress(data);
-      if (error?.field && error.message) {
-        setError(error.field as keyof Address, {
-          type: "server",
-          message: error.message,
-        });
-      } else {
-        redirect("/checkout/pagamento");
-      }
-    } else {
-      redirect("/checkout/pagamento");
+    const error = guestAddress
+      ? await updateGuestAddress(data)
+      : await createAddress(data);
+
+    if (error?.field && error.message) {
+      setError(error.field as keyof Address, {
+        type: "server",
+        message: error.message,
+      });
+      return;
     }
+
+    redirect("/checkout/pagamento");
   };
 
   return (
