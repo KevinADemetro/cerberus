@@ -55,6 +55,7 @@ export async function updateGuestAddress(address: ZodAddress) {
         neighborhood: address.neighborhood,
         city: address.city,
         state: address.state,
+        updatedAt: new Date(),
       },
     });
   } catch (err: any) {

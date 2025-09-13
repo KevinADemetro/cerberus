@@ -11,6 +11,7 @@ import { Button } from "@/src/components/Button";
 import { DeliveryOption } from "@/src/core/shipping/components/DeliveryOption";
 import { DeliveryOption as DeliveryOptionType } from "@/src/core/shipping/shipping.types";
 import { calculateShipping } from "@/src/core/shipping/api/melhorEnvio";
+import { isAddressEqual } from "../util";
 
 export function AddressForm() {
   const [deliveryOption, setDeliveryOption] = useState<DeliveryOptionType | null>(null);
@@ -65,9 +66,15 @@ export function AddressForm() {
 
   const submit: SubmitHandler<Address> = async (data) => {
     localStorage.removeItem("cep");
-    const error = guestAddress
-      ? await updateGuestAddress(data)
-      : await createAddress(data);
+
+    let error;
+    if (guestAddress) {
+      if (!isAddressEqual(guestAddress, data)) {
+        error = await updateGuestAddress(data);
+      }
+    } else {
+      error = await createAddress(data);
+    }
 
     if (error?.field && error.message) {
       setError(error.field as keyof Address, {
