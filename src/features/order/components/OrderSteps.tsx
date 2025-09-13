@@ -1,6 +1,5 @@
 "use client";
 import { usePathname } from "next/navigation";
-import Link from "next/link";
 import { OrderStep } from "@/src/features/order/components/OrderStep";
 
 export function OrderSteps() {
@@ -16,9 +15,9 @@ export function OrderSteps() {
       {links.map((link, i) => {
         const isActive = pathname === link.href;
         return (
-          <Link href={link.href} key={link.href} className="flex-1">
+          <div key={link.href} className="flex-1">
             <OrderStep indice={i + 1} label={link.label} isActive={isActive} />
-          </Link>
+          </div>
         );
       })}
     </ol>
