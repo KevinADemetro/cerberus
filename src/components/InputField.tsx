@@ -20,6 +20,7 @@ type InputFieldProps<T extends FieldValues> = {
     | "email"
     | "numeric"
     | "decimal";
+  disabled?: boolean;
 };
 
 export function InputField<T extends FieldValues>({
@@ -33,6 +34,7 @@ export function InputField<T extends FieldValues>({
   error,
   inputMode = "text",
   type = "text",
+  disabled = false,
 }: InputFieldProps<T>) {
   return (
     <div className="flex flex-col">
@@ -42,18 +44,20 @@ export function InputField<T extends FieldValues>({
           inputMode={inputMode}
           type={type}
           id={field}
+          disabled={disabled}
           placeholder={placeholder}
           {...registerWithMask(field, mask)}
-          className={`py-3 px-5 border border-gray-600 rounded-md focus-within:outline-2 focus-within:outline-gray-300 ${className}`}
+          className={`py-3 px-5 border border-gray-600  rounded-md focus-within:outline-2 focus-within:outline-gray-300 disabled:border-gray-300 disabled:text-gray-600 ${className}`}
         />
       ) : (
         <input
           inputMode={inputMode}
+          disabled={disabled}
           type={type}
           id={field}
           placeholder={placeholder}
           {...register?.(field)}
-          className={`py-3 px-5 border border-gray-600 rounded-md focus-within:outline-2 focus-within:outline-gray-300 ${className}`}
+          className={`py-3 px-5 border border-gray-600 rounded-md focus-within:outline-2 focus-within:outline-gray-300 disabled:border-gray-300 disabled:text-gray-600 ${className}`}
         />
       )}
 

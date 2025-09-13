@@ -1,6 +1,13 @@
 "use server";
 
-import { melhorEnvioClient, cepFrom } from "@/src/lib/melhorEnvio";
+import {
+  melhorEnvioClient,
+  cepFrom,
+  from,
+  to,
+  products,
+  options,
+} from "@/src/lib/melhorEnvio";
 
 export async function calculateShipping(cepTo: string) {
   const body = {
@@ -15,7 +22,6 @@ export async function calculateShipping(cepTo: string) {
   const { data } = await melhorEnvioClient.post("/me/shipment/calculate", body);
 
   //todo erro na api
-  console.log(data);
   const cheapestPackage = data
     .filter((item: any) => item.name === ".Package")
     .reduce((prev: any, curr: any) =>
@@ -23,9 +29,24 @@ export async function calculateShipping(cepTo: string) {
     );
 
   return {
-    id: cheapestPackage.id,
+    serviceId: cheapestPackage.id,
     price: Number(cheapestPackage.custom_price),
+    companyId: cheapestPackage.company.id,
     companyName: cheapestPackage.company.name,
     deliveryTime: cheapestPackage.delivery_time,
   };
+}
+
+export async function createCart() {
+  const body = {
+    service: 4,
+    agency: 2,
+    from: from,
+    to: to,
+    products: products,
+    options: options,
+  };
+
+  const { data } = await melhorEnvioClient.post("/me/cart", body);
+  console.log(data);
 }

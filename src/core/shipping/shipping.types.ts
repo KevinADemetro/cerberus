@@ -1,6 +1,7 @@
 export type DeliveryOption = {
-  id: string;
+  serviceId: string;
   price: number;
   companyName: string;
+  companyId: number;
   deliveryTime: number;
 };

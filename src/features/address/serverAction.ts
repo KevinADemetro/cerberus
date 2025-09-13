@@ -10,10 +10,11 @@ export async function createAddress(address: ZodAddress) {
   const userUuid = cookieStore.get("userUuid");
 
   if (!userUuid) {
-    return { field: "general", message: "Usuário não encontrado no cookie" };
+    throw new Error("Usuário não encontrado no cookie");
   }
+
   try {
-    await prisma.address.create({
+    const created = await prisma.address.create({
       data: {
         userId: userUuid.value,
         cep: address.cep,
@@ -26,12 +27,14 @@ export async function createAddress(address: ZodAddress) {
         state: address.state,
       },
     });
+
+    return created.id;
   } catch (err: any) {
     if (err.code === "P2002") {
       const target = err.meta?.target?.[0];
-      return { field: target ?? "general", message: "Endereço duplicado" };
+      throw new Error(`Endereço duplicado: ${target ?? "campo desconhecido"}`);
     }
-    return { field: "general", message: "Erro inesperado" };
+    throw new Error("Erro inesperado ao criar endereço");
   }
 }
 
@@ -40,11 +43,11 @@ export async function updateGuestAddress(address: ZodAddress) {
   const userUuid = cookieStore.get("userUuid");
 
   if (!userUuid) {
-    return { field: "general", message: "Usuário não encontrado no cookie" };
+    throw new Error("Usuário não encontrado no cookie");
   }
 
   try {
-    await prisma.address.updateMany({
+    const updated = await prisma.address.updateMany({
       where: { userId: userUuid.value },
       data: {
         cep: address.cep,
@@ -58,12 +61,26 @@ export async function updateGuestAddress(address: ZodAddress) {
         updatedAt: new Date(),
       },
     });
+
+    if (updated.count === 0) {
+      throw new Error("Endereço não encontrado para atualização");
+    }
+
+    const addressRecord = await prisma.address.findFirst({
+      where: { userId: userUuid.value },
+    });
+
+    if (!addressRecord) {
+      throw new Error("Endereço atualizado não encontrado");
+    }
+
+    return addressRecord.id;
   } catch (err: any) {
     if (err.code === "P2002") {
       const target = err.meta?.target?.[0];
-      return { field: target ?? "general", message: "Endereço duplicado" };
+      throw new Error(`Endereço duplicado: ${target ?? "campo desconhecido"}`);
     }
-    return { field: "general", message: "Erro inesperado" };
+    throw new Error("Erro inesperado ao atualizar endereço");
   }
 }
 

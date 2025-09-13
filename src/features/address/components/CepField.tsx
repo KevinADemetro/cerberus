@@ -13,11 +13,13 @@ export function CepField({
   type = "actionField",
   children,
   actionLabel = "Calcular",
+  value,
 }: {
   customAction?: (cep: string) => void;
   type?: "actionField" | "form";
   children?: React.ReactNode;
   actionLabel?: string;
+  value?: string;
 }) {
   const {
     register,
@@ -28,11 +30,12 @@ export function CepField({
   } = useForm<Cep>({ resolver: zodResolver(cepSchema) });
 
   useEffect(() => {
-    const cep = localStorage.getItem("cep");
+    const cep = value !== undefined ? value : localStorage.getItem("cep");
+    localStorage.setItem("cep", cep ?? "");
     if (cep) {
       setValue("cep", cep);
     }
-  }, [setValue]);
+  }, [setValue, value]);
 
   const registerWithMask = useHookFormMask(register);
 

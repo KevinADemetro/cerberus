@@ -102,6 +102,7 @@ model Address {
   state        String   @map("state")
   createdAt    DateTime @default(now()) @map("created_at")
   updatedAt    DateTime @default(now()) @updatedAt @map("updated_at")
+  carts        Cart[]
 
   @@map("address")
 }
@@ -109,10 +110,12 @@ model Address {
 model Cart {
   id           String            @id @default(uuid()) @map("id")
   userId       Int?              @map("user_id")
+  addressId    String?           @map("address_id")
+  address      Address?          @relation(fields: [addressId], references: [id])
   createdAt    DateTime          @default(now()) @map("created_at")
   updatedAt    DateTime?         @default(now()) @map("updated_at")
+  shippingQuote Json?            @map("shipping_quote")
   cartItems    CartItem[]
-  melhorEnvio  MelhorEnvioCart?
 
   @@map("cart")
 }
@@ -128,57 +131,4 @@ model CartItem {
   updatedAt DateTime  @default(now()) @updatedAt @map("updated_at")
   @@unique([productVariantId, cartId])
   @@map("cart_item")
-}
-
-model MelhorEnvioCart {
-  id String @id @default(uuid()) @map("id")
-  cartId String @unique @map("cart_id")
-  cart   Cart   @relation(fields: [cartId], references: [id])
-
-  protocol          String?    @map("protocol")
-  service_id        Int        @map("service_id")
-  agency_id         Int?       @map("agency_id")
-  contract          String?    @map("contract")
-  service_code      String?    @map("service_code")
-  quote             Float      @map("quote")
-  price             Float      @map("price")
-  coupon            String?    @map("coupon")
-  discount          Float?     @map("discount")
-  delivery_min      Int?       @map("delivery_min")
-  delivery_max      Int?       @map("delivery_max")
-  status            String     @map("status")
-  reminder          String?    @map("reminder")
-  insurance_value   Float?     @map("insurance_value")
-  weight            Float?     @map("weight")
-  width             Float?     @map("width")
-  height            Float?     @map("height")
-  length            Float?     @map("length")
-  diameter          Float?     @map("diameter")
-  format            String?    @map("format")
-  billed_weight     Float?     @map("billed_weight")
-  receipt           Boolean?   @map("receipt")
-  own_hand          Boolean?   @map("own_hand")
-  collect           Boolean?   @map("collect")
-  collect_scheduled_at DateTime? @map("collect_scheduled_at")
-  reverse           Boolean?   @map("reverse")
-  non_commercial    Boolean?   @map("non_commercial")
-  authorization_code String?    @map("authorization_code")
-  tracking          String?    @map("tracking")
-  self_tracking     String?    @map("self_tracking")
-  delivery_receipt  String?    @map("delivery_receipt")
-  additional_info   String?    @map("additional_info")
-  cte_key           String?    @map("cte_key")
-  paid_at           DateTime?  @map("paid_at")
-  generated_at      DateTime?  @map("generated_at")
-  posted_at         DateTime?  @map("posted_at")
-  delivered_at      DateTime?  @map("delivered_at")
-  canceled_at       DateTime?  @map("canceled_at")
-  suspended_at      DateTime?  @map("suspended_at")
-  expired_at        DateTime?  @map("expired_at")
-  created_at        DateTime    @map("created_at")
-  updated_at        DateTime    @map("updated_at")
-  parse_pi_at       DateTime?   @map("parse_pi_at")
-  received_at       DateTime?   @map("received_at")
-  risk              Boolean?    @map("risk")
-  @@map("melhor_envio_cart")
 }

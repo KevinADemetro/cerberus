@@ -9,7 +9,7 @@ export function DeliveryOption({
   return (
     <dl className="mt-5">
       <li
-        key={deliveryOption.id}
+        key={deliveryOption.serviceId}
         className="flex flex-col text-sm bg-gray-50 rounded-md py-2 px-5 mb-2"
       >
         <dt>{deliveryOption.companyName}:</dt>

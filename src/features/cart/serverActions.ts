@@ -3,6 +3,7 @@ import { Prisma } from "@/generated/prisma";
 import { cookies } from "next/headers";
 import prisma from "../../lib/prisma";
 import { redirect } from "next/navigation";
+import { DeliveryOption } from "@/src/core/shipping/shipping.types";
 
 export async function handleAddToCart(variant: Prisma.ProductVariantGetPayload<object>) {
   const cookieStore = await cookies();
@@ -114,4 +115,20 @@ export async function getCartItems() {
     orderBy: { id: "desc" },
   });
   return res;
+}
+
+export async function prepareShippingCart(delivery: DeliveryOption, addressId: string) {
+  const cookieStore = await cookies();
+  const cartUuid = cookieStore.get("cartUuid")?.value;
+  if (!cartUuid) {
+    return;
+  }
+
+  await prisma.cart.update({
+    where: { id: cartUuid },
+    data: {
+      addressId: addressId,
+      shippingQuote: delivery,
+    },
+  });
 }

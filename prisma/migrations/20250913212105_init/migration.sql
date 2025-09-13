@@ -97,8 +97,10 @@ CREATE TABLE "public"."address" (
 CREATE TABLE "public"."cart" (
     "id" TEXT NOT NULL,
     "user_id" INTEGER,
+    "address_id" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "shipping_quote" JSONB,
 
     CONSTRAINT "cart_pkey" PRIMARY KEY ("id")
 );
@@ -113,59 +115,6 @@ CREATE TABLE "public"."cart_item" (
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "cart_item_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "public"."melhor_envio_cart" (
-    "id" TEXT NOT NULL,
-    "cart_id" TEXT NOT NULL,
-    "protocol" TEXT,
-    "service_id" INTEGER NOT NULL,
-    "agency_id" INTEGER,
-    "contract" TEXT,
-    "service_code" TEXT,
-    "quote" DOUBLE PRECISION NOT NULL,
-    "price" DOUBLE PRECISION NOT NULL,
-    "coupon" TEXT,
-    "discount" DOUBLE PRECISION,
-    "delivery_min" INTEGER,
-    "delivery_max" INTEGER,
-    "status" TEXT NOT NULL,
-    "reminder" TEXT,
-    "insurance_value" DOUBLE PRECISION,
-    "weight" DOUBLE PRECISION,
-    "width" DOUBLE PRECISION,
-    "height" DOUBLE PRECISION,
-    "length" DOUBLE PRECISION,
-    "diameter" DOUBLE PRECISION,
-    "format" TEXT,
-    "billed_weight" DOUBLE PRECISION,
-    "receipt" BOOLEAN,
-    "own_hand" BOOLEAN,
-    "collect" BOOLEAN,
-    "collect_scheduled_at" TIMESTAMP(3),
-    "reverse" BOOLEAN,
-    "non_commercial" BOOLEAN,
-    "authorization_code" TEXT,
-    "tracking" TEXT,
-    "self_tracking" TEXT,
-    "delivery_receipt" TEXT,
-    "additional_info" TEXT,
-    "cte_key" TEXT,
-    "paid_at" TIMESTAMP(3),
-    "generated_at" TIMESTAMP(3),
-    "posted_at" TIMESTAMP(3),
-    "delivered_at" TIMESTAMP(3),
-    "canceled_at" TIMESTAMP(3),
-    "suspended_at" TIMESTAMP(3),
-    "expired_at" TIMESTAMP(3),
-    "created_at" TIMESTAMP(3) NOT NULL,
-    "updated_at" TIMESTAMP(3) NOT NULL,
-    "parse_pi_at" TIMESTAMP(3),
-    "received_at" TIMESTAMP(3),
-    "risk" BOOLEAN,
-
-    CONSTRAINT "melhor_envio_cart_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -186,9 +135,6 @@ CREATE UNIQUE INDEX "user_cpf_key" ON "public"."user"("cpf");
 -- CreateIndex
 CREATE UNIQUE INDEX "cart_item_product_variant_id_cart_id_key" ON "public"."cart_item"("product_variant_id", "cart_id");
 
--- CreateIndex
-CREATE UNIQUE INDEX "melhor_envio_cart_cart_id_key" ON "public"."melhor_envio_cart"("cart_id");
-
 -- AddForeignKey
 ALTER TABLE "public"."product" ADD CONSTRAINT "product_category_id_fkey" FOREIGN KEY ("category_id") REFERENCES "public"."category"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
@@ -208,10 +154,10 @@ ALTER TABLE "public"."product_color_image" ADD CONSTRAINT "product_color_image_c
 ALTER TABLE "public"."address" ADD CONSTRAINT "address_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "public"."cart" ADD CONSTRAINT "cart_address_id_fkey" FOREIGN KEY ("address_id") REFERENCES "public"."address"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "public"."cart_item" ADD CONSTRAINT "cart_item_product_variant_id_fkey" FOREIGN KEY ("product_variant_id") REFERENCES "public"."product_variant"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."cart_item" ADD CONSTRAINT "cart_item_cart_id_fkey" FOREIGN KEY ("cart_id") REFERENCES "public"."cart"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "public"."melhor_envio_cart" ADD CONSTRAINT "melhor_envio_cart_cart_id_fkey" FOREIGN KEY ("cart_id") REFERENCES "public"."cart"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

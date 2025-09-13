@@ -2,7 +2,7 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { Address, addressSchema } from "../address.schema";
 import { createAddress, getAddress, updateGuestAddress } from "../serverAction";
 import { InputField } from "@/src/components/InputField";
@@ -11,7 +11,7 @@ import { Button } from "@/src/components/Button";
 import { DeliveryOption } from "@/src/core/shipping/components/DeliveryOption";
 import { DeliveryOption as DeliveryOptionType } from "@/src/core/shipping/shipping.types";
 import { calculateShipping } from "@/src/core/shipping/api/melhorEnvio";
-import { isAddressEqual } from "../util";
+import { prepareShippingCart } from "@/src/features/cart/serverActions";
 
 export function AddressForm() {
   const [deliveryOption, setDeliveryOption] = useState<DeliveryOptionType | null>(null);
@@ -27,12 +27,14 @@ export function AddressForm() {
 
   const [step, setStep] = useState<"cep" | "full">("cep");
   const [guestAddress, setGuestAddress] = useState<Address | null>(null);
+  const [cep, setCep] = useState<string | undefined>();
 
   useEffect(() => {
     async function fetchAddress() {
       const addressData = await getAddress();
       if (addressData) {
-        localStorage.setItem("cep", addressData.cep);
+        setDeliveryOption(await calculateShipping(addressData.cep)); // passar itens nessa função
+        setCep(addressData.cep);
         reset(addressData);
         setStep("full");
         setGuestAddress(addressData);
@@ -66,25 +68,18 @@ export function AddressForm() {
 
   const submit: SubmitHandler<Address> = async (data) => {
     localStorage.removeItem("cep");
+    const addressId = guestAddress
+      ? await updateGuestAddress(data)
+      : await createAddress(data);
 
-    let error;
-    if (guestAddress) {
-      if (!isAddressEqual(guestAddress, data)) {
-        error = await updateGuestAddress(data);
+    if (addressId) {
+      if (deliveryOption) {
+        await prepareShippingCart(deliveryOption, addressId);
+        redirect("/checkout/pagamento");
+      } else {
+        notFound();
       }
-    } else {
-      error = await createAddress(data);
     }
-
-    if (error?.field && error.message) {
-      setError(error.field as keyof Address, {
-        type: "server",
-        message: error.message,
-      });
-      return;
-    }
-
-    redirect("/checkout/pagamento");
   };
 
   return (
@@ -96,6 +91,7 @@ export function AddressForm() {
             type={step === "cep" ? "form" : "actionField"}
             customAction={handleCepSubmit}
             actionLabel={step === "cep" ? "" : "Atualizar"}
+            value={cep}
           >
             <Button>Continuar</Button>
           </CepField>
@@ -117,6 +113,7 @@ export function AddressForm() {
               field="street"
               register={register}
               error={errors.street}
+              disabled={true}
             />
             <InputField<Address>
               placeholder="Número"
@@ -138,6 +135,7 @@ export function AddressForm() {
               field="neighborhood"
               register={register}
               error={errors.neighborhood}
+              disabled={true}
             />
             <InputField<Address>
               placeholder="Cidade"
@@ -145,6 +143,7 @@ export function AddressForm() {
               field="city"
               register={register}
               error={errors.city}
+              disabled={true}
             />
             <InputField<Address>
               placeholder="Estado"
@@ -152,6 +151,7 @@ export function AddressForm() {
               field="state"
               register={register}
               error={errors.state}
+              disabled={true}
             />
             {deliveryOption && (
               <div>
