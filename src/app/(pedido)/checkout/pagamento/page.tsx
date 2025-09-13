@@ -1,12 +1,10 @@
 import { PricingSummary } from "@/src/core/pricing/components/PricingSummary";
 import { createOrder } from "@/src/features/order/serverActions";
-import { getCartItems } from "@/src/features/cart/serverActions";
-import { calculateTotal } from "@/src/core/pricing/utils";
 import { Button } from "@/src/components/Button";
+import { calculateTotal } from "@/src/core/pricing/serverActions";
 
 async function Page() {
-  const cartItems = await getCartItems();
-  const totals = calculateTotal(cartItems);
+  const totals = await calculateTotal();
   return (
     <div>
       <h1>Pagamento</h1>

@@ -8,12 +8,13 @@ import {
 import { RemoveCartItemButton } from "./RemoveCartItemButton";
 import { ProductImage } from "@/src/features/product/components/ProductImage";
 import { FormAddQuantity } from "@/src/features/cart/components/FormAddQuantity";
+import { getPrice } from "@/src/core/pricing/utils";
 
 export async function CartItem({ cartItem }: { cartItem: CartItemWithProduct }) {
   const { productVariant, quantity, id: cartItemId } = cartItem;
   const { product, size, colorId } = productVariant;
   const { name: colorName } = await getColorBy(colorId);
-  const { id: productId, slug, name, price } = product;
+  const { id: productId, slug, name } = product;
   const image = await getImageByColorIdAndProductId(colorId, productId);
   const link = `/${slug}?cor=${colorId}`;
 
@@ -31,7 +32,7 @@ export async function CartItem({ cartItem }: { cartItem: CartItemWithProduct }) 
       <ProductImage imagePath={image.imagePath} link={link} className="my-5" />
       <div className="flex justify-between items-center">
         <FormAddQuantity quantity={quantity} cartItemId={cartItemId} />
-        <strong>{formatCurrency(quantity * price)}</strong>
+        <strong>{formatCurrency(quantity * getPrice(product))}</strong>
       </div>
     </li>
   );

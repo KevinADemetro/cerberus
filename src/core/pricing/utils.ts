@@ -1,17 +1,17 @@
 import { Prisma } from "@/generated/prisma";
-import { PricingTotals } from "@/src/core/pricing/pricingTotals.type";
+import { PricingTotals } from "./pricingTotals.type";
 
-function getProductsSubtotal(
+export function getProductsSubtotal(
   cartItems: Prisma.CartItemGetPayload<{
     include: { productVariant: { include: { product: true } } };
   }>[]
 ): number {
   return cartItems.reduce((acc, item) => {
-    return acc + item.productVariant.product.price * item.quantity;
+    return acc + getPrice(item.productVariant.product) * item.quantity;
   }, 0);
 }
 
-function calculateDiscount(
+export function calculateDiscount(
   subtotal: number,
   coupon?: { type: "percent" | "fixed"; value: number }
 ): number {
@@ -28,7 +28,7 @@ function calculateDiscount(
   return 0;
 }
 
-export function calculateTotal(
+export function calculatePreviewTotal(
   items: Prisma.CartItemGetPayload<{
     include: { productVariant: { include: { product: true } } };
   }>[],
@@ -40,6 +40,13 @@ export function calculateTotal(
   const total = subtotal - discount + shipping;
 
   return { subtotal, discount, shipping, total };
+}
+
+export function getPrice(product: { price: number; discountRate?: number }): number {
+  if (product.discountRate && product.discountRate > 0) {
+    return getDiscountedPrice(product.price, product.discountRate);
+  }
+  return product.price;
 }
 
 export function getDiscountedPrice(price: number, discountRate: number): number {

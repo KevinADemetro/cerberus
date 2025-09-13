@@ -1,14 +1,14 @@
 "use client";
 import { PricingSummary } from "@/src/core/pricing/components/PricingSummary";
 import { ShippingTime } from "@/src/core/shipping/components/ShippingTime";
-import { calculateTotal } from "@/src/core/pricing/utils";
 import { StepForward } from "@/src/components/StepForward";
 import { CartItemWithProduct } from "../CartItem.types";
 import { useState } from "react";
+import { calculatePreviewTotal } from "@/src/core/pricing/utils";
 
 export function CartDetails({ cartItems }: { cartItems: CartItemWithProduct[] }) {
   const [shippingPrice, setShippingPrice] = useState(0);
-  const totals = calculateTotal(cartItems, shippingPrice);
+  const totals = calculatePreviewTotal(cartItems, shippingPrice);
 
   return (
     <>
